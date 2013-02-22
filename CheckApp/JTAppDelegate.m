@@ -7,8 +7,11 @@
 //
 
 #import "JTAppDelegate.h"
+#import "JTRootViewController.h"
 
 @implementation JTAppDelegate
+@synthesize window = _window;
+@synthesize nvc = _nvc;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -16,6 +19,11 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    JTRootViewController * vc = [[JTRootViewController alloc]init];
+    self.nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+    self.window.rootViewController = self.nvc;
+    
     return YES;
 }
 
