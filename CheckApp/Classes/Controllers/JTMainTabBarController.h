@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JTMainTabBarController : UITabBarController
+@interface JTMainTabBarController : UITabBarController < UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITabBarControllerDelegate , UIAlertViewDelegate >
 
 @end

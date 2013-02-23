@@ -11,6 +11,6 @@
 @interface JTCategoryViewController : UIViewController <PSTCollectionViewDataSource, PSTCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic,strong) NSArray * categories;
-- (id)initWithNewItemName:(NSString*)name;
+- (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath;
 
 @end

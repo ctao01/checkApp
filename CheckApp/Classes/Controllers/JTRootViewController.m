@@ -30,9 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    self.view.backgroundColor = [UIColor darkGrayColor];
-    
+	self.view.backgroundColor = [UIColor darkGrayColor];
+
     activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     activityIndicator.center = CGPointMake(self.view.center.x, self.view.center.y + 120.0f);

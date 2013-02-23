@@ -12,24 +12,37 @@
 #import "JTObject.h"
 #import "JTCategoryItemCell.h"
 
+#import "JTItemsViewController.h"
+
+#define Minimum_Interitem_Spacing 3.0f
+#define Minimum_Line_Spacing 5.0f
+
 static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
+static float rgbcolor(value)
+{
+    return value/255.0f;
+}
 
 @interface JTCategoryViewController ()
 {
     PSUICollectionView * _gridView;
+    UISearchBar * searchBar;
 }
 @property (nonatomic , retain) NSString * itemName;
+@property (nonatomic , retain) NSString * itemImagePath;
+
 @end
 
 @implementation JTCategoryViewController
 @synthesize categories;
 
-- (id)initWithNewItemName:(NSString*)name
+- (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath
 {
     self = [super init];
     if (self)
     {
         self.itemName = name;
+        self.itemImagePath = imagePath;
     }
     return self;
 }
@@ -37,9 +50,16 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self generateData];
+    self.navigationItem.title = @"Category";
     
+	[self generateData];
     [self createGridView];
+    
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    searchBar.tintColor = [UIColor colorWithRed:rgbcolor(188) green:rgbcolor(215) blue:rgbcolor(237) alpha:0.4f];
+    [self.view addSubview:searchBar];
+    
+    self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(230) green:rgbcolor(230) blue:rgbcolor(230) alpha:1.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,13 +80,16 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
     }
     else
     {
-        NSArray * array = [NSArray arrayWithObjects:@"Meat",@"Vegetable",@"Dairy",@"Beverage",@"Cracker",@"Drug", nil];
+        NSArray * array = [NSArray arrayWithObjects:@"Frozen",@"Fresh",@"Dairy",@"Beverage",@"Crackers",@"Pharmacy",@"Canned", @"Sauces",@"Other", nil];
         NSArray * tempPeriod = [NSArray arrayWithObjects:[NSNumber numberWithInt:7],
-                                [NSNumber numberWithInt:14],
+                                [NSNumber numberWithInt:10],
                                 [NSNumber numberWithInt:7],
                                 [NSNumber numberWithInt:90],
-                                [NSNumber numberWithInt:90],
-                                [NSNumber numberWithInt:365], nil];
+                                [NSNumber numberWithInt:120],
+                                [NSNumber numberWithInt:365],
+                                [NSNumber numberWithInt:365],
+                                [NSNumber numberWithInt:365],
+                                [NSNumber numberWithInt:365*10],nil];
         
         for (int i = 0; i < [array count]; i++)
         {
@@ -90,22 +113,29 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"JTCategory" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
+    NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:@"title"
+                                                      ascending:YES
+                                                       selector:@selector(localizedCaseInsensitiveCompare:)];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:descriptor, nil]];
     NSError *error;
     self.categories = [context executeFetchRequest:fetchRequest error:&error];
-
 }
 
 - (void)createGridView {
     PSUICollectionViewFlowLayout *layout = [[PSUICollectionViewFlowLayout alloc] init];
     
-    [layout setMinimumInteritemSpacing:0.0f];
-    [layout setMinimumLineSpacing:0.0f];
+    [layout setMinimumInteritemSpacing:Minimum_Interitem_Spacing];
+    [layout setMinimumLineSpacing:Minimum_Line_Spacing];
     
-    _gridView = [[PSUICollectionView alloc] initWithFrame:[self.view bounds] collectionViewLayout:layout];
+    CGRect rect = UIEdgeInsetsInsetRect([self.view bounds], UIEdgeInsetsMake(50.0f, 0.0f, 0.0f, 0.0f));
+    
+    _gridView = [[PSUICollectionView alloc] initWithFrame:rect collectionViewLayout:layout];
     _gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _gridView.delegate = self;
     _gridView.dataSource = self;
-    _gridView.backgroundColor = [UIColor colorWithRed:0.135 green:0.341 blue:0.000 alpha:1.000];
+    _gridView.backgroundColor  = [UIColor clearColor];
+//    _gridView.backgroundColor = [UIColor colorWithRed:0.135 green:0.341 blue:0.000 alpha:1.000];
+
     [_gridView registerClass:[JTCategoryItemCell class] forCellWithReuseIdentifier:CollectionViewCellIdentifier];
     
     [self.view addSubview:_gridView];
@@ -128,7 +158,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
     JTCategory * category = [self.categories objectAtIndex:indexPath.item];
     
     JTCategoryItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CollectionViewCellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
+//    cell.backgroundColor = [UIColor redColor];
     cell.titleLabel.text = category.title;
 //    cell.label.text = [self formatIndexPath:indexPath];
     
@@ -144,7 +174,10 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 - (UIEdgeInsets)collectionView:(PSUICollectionView *)collectionView layout:(PSUICollectionView*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake( (self.view.frame.size.height -300.0f)/2 + 44.0f, (self.view.bounds.size.width -300.0f)/2, (self.view.frame.size.height -300.0f)/2, (self.view.bounds.size.width -300.0f)/2);
+    return UIEdgeInsetsMake( 0.0f,
+                            (self.view.bounds.size.width -300.0f - Minimum_Interitem_Spacing * 2)/2,
+                            0.0f,
+                            (self.view.bounds.size.width -300.0f- Minimum_Interitem_Spacing * 2)/2);
 }
 
 - (NSInteger)collectionView:(PSUICollectionView *)view numberOfItemsInSection:(NSInteger)section {
@@ -166,7 +199,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 - (void)collectionView:(PSTCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.tabBarController.selectedIndex == 1)
+    if (self.tabBarController.selectedIndex == 2)
     {
         JTObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
                                                           inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
@@ -179,7 +212,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
         [object setExpiredDate:[[NSDate date]dateByAddingTimeInterval: 60 * 60 * 24 * days]];
         [object setToBuy:NO];
         [object setToBuyDate:nil];
-        [object setImagePath:nil];
+        [object setImagePath:self.itemImagePath];
         
         NSError *error;
         if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
@@ -188,33 +221,33 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
         }
         else
         {
-            self.tabBarController.selectedIndex = 0;
-            
+            [self.tabBarController setSelectedIndex:0];
         }
         
     }
     else if (self.tabBarController.selectedIndex == 0)
     {
-//        SMCategoryItemsViewController * vc = [[SMCategoryItemsViewController alloc]initWithStyle:UITableViewStylePlain];
-//        
-//        SMCategory * category = [categories objectAtIndex:indexPath.row];
-//        NSEntityDescription *entity = [NSEntityDescription
-//                                       entityForName:@"SMObject" inManagedObjectContext:managedObjectContext];
-//        
-//        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//        [fetchRequest setEntity:entity];
-//        
-//        NSError * error;
-//        NSArray * allObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-//        vc.items = [[NSMutableArray alloc]init];
-//        for (SMObject * obj in allObjects)
-//        {
-//            if (obj.category == category)
-//                [vc.items addObject:obj];
-//        }
-//        
-//        [self.navigationController pushViewController:vc animated:YES];
-//        vc.navigationItem.title = category.title;
+        
+        JTItemsViewController * vc = [[JTItemsViewController alloc]initWithStyle:UITableViewStylePlain];
+        
+        JTCategory * category = [categories objectAtIndex:indexPath.row];
+        NSEntityDescription *entity = [NSEntityDescription
+                                       entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManger]managedObjectContext]];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        [fetchRequest setEntity:entity];
+        
+        NSError * error;
+        NSArray * allObjects = [[[JTObjectManager sharedManger]managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+        vc.items = [[NSMutableArray alloc]init];
+        for (JTObject * obj in allObjects)
+        {
+            if (obj.category == category)
+                [vc.items addObject:obj];
+        }
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        vc.navigationItem.title = category.title;
     }
 }
 

@@ -39,6 +39,15 @@
 		3D60FAD816D7D52B00AC73A2 /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D60FACB16D7D52B00AC73A2 /* PSTGridLayoutSection.m */; };
 		3D60FADB16D7D56600AC73A2 /* JTCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D60FADA16D7D56500AC73A2 /* JTCategoryViewController.m */; };
 		3D60FAE216D7E22300AC73A2 /* JTCategoryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D60FAE116D7E22300AC73A2 /* JTCategoryItemCell.m */; };
+		7E7EBBAE16D81931008A5E83 /* cameraTabBarItem.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBAC16D81931008A5E83 /* cameraTabBarItem.png */; };
+		7E7EBBAF16D81931008A5E83 /* cameraTabBarItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBAD16D81931008A5E83 /* cameraTabBarItem@2x.png */; };
+		7E7EBBB316D825BD008A5E83 /* bg_CategoryCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBB116D825BD008A5E83 /* bg_CategoryCell.png */; };
+		7E7EBBB416D825BD008A5E83 /* bg_CategoryCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBB216D825BD008A5E83 /* bg_CategoryCell@2x.png */; };
+		7E7EBBB816D82DFB008A5E83 /* bg_CategoryCellwithTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBB616D82DFB008A5E83 /* bg_CategoryCellwithTape.png */; };
+		7E7EBBB916D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBB716D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png */; };
+		7E7EBBBC16D83620008A5E83 /* JTItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EBBBB16D83620008A5E83 /* JTItemsViewController.m */; };
+		7E7EBBBF16D83742008A5E83 /* JTBuyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EBBBE16D83742008A5E83 /* JTBuyListViewController.m */; };
+		7E7EBBC216D8862D008A5E83 /* NSString+JTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EBBC116D8862D008A5E83 /* NSString+JTAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +108,18 @@
 		3D60FADA16D7D56500AC73A2 /* JTCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCategoryViewController.m; path = Classes/Controllers/JTCategoryViewController.m; sourceTree = "<group>"; };
 		3D60FAE016D7E22300AC73A2 /* JTCategoryItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCategoryItemCell.h; path = Classes/Cells/JTCategoryItemCell.h; sourceTree = "<group>"; };
 		3D60FAE116D7E22300AC73A2 /* JTCategoryItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCategoryItemCell.m; path = Classes/Cells/JTCategoryItemCell.m; sourceTree = "<group>"; };
+		7E7EBBAC16D81931008A5E83 /* cameraTabBarItem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cameraTabBarItem.png; path = Assets/Icons/cameraTabBarItem.png; sourceTree = "<group>"; };
+		7E7EBBAD16D81931008A5E83 /* cameraTabBarItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cameraTabBarItem@2x.png"; path = "Assets/Icons/cameraTabBarItem@2x.png"; sourceTree = "<group>"; };
+		7E7EBBB116D825BD008A5E83 /* bg_CategoryCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_CategoryCell.png; path = Assets/Backgrounds/bg_CategoryCell.png; sourceTree = "<group>"; };
+		7E7EBBB216D825BD008A5E83 /* bg_CategoryCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_CategoryCell@2x.png"; path = "Assets/Backgrounds/bg_CategoryCell@2x.png"; sourceTree = "<group>"; };
+		7E7EBBB616D82DFB008A5E83 /* bg_CategoryCellwithTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_CategoryCellwithTape.png; path = Assets/Backgrounds/bg_CategoryCellwithTape.png; sourceTree = "<group>"; };
+		7E7EBBB716D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_CategoryCellwithTape@2x.png"; path = "Assets/Backgrounds/bg_CategoryCellwithTape@2x.png"; sourceTree = "<group>"; };
+		7E7EBBBA16D83620008A5E83 /* JTItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTItemsViewController.h; path = Classes/Controllers/JTItemsViewController.h; sourceTree = "<group>"; };
+		7E7EBBBB16D83620008A5E83 /* JTItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTItemsViewController.m; path = Classes/Controllers/JTItemsViewController.m; sourceTree = "<group>"; };
+		7E7EBBBD16D83742008A5E83 /* JTBuyListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTBuyListViewController.h; path = Classes/Controllers/JTBuyListViewController.h; sourceTree = "<group>"; };
+		7E7EBBBE16D83742008A5E83 /* JTBuyListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTBuyListViewController.m; path = Classes/Controllers/JTBuyListViewController.m; sourceTree = "<group>"; };
+		7E7EBBC016D8862D008A5E83 /* NSString+JTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+JTAdditions.h"; path = "Classes/Categories/NSString+JTAdditions.h"; sourceTree = "<group>"; };
+		7E7EBBC116D8862D008A5E83 /* NSString+JTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+JTAdditions.m"; path = "Classes/Categories/NSString+JTAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +209,8 @@
 		3D60FA8516D7C81D00AC73A2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				7E7EBBC016D8862D008A5E83 /* NSString+JTAdditions.h */,
+				7E7EBBC116D8862D008A5E83 /* NSString+JTAdditions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -195,6 +218,12 @@
 		3D60FA8616D7C82F00AC73A2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				7E7EBBB616D82DFB008A5E83 /* bg_CategoryCellwithTape.png */,
+				7E7EBBB716D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png */,
+				7E7EBBB116D825BD008A5E83 /* bg_CategoryCell.png */,
+				7E7EBBB216D825BD008A5E83 /* bg_CategoryCell@2x.png */,
+				7E7EBBAC16D81931008A5E83 /* cameraTabBarItem.png */,
+				7E7EBBAD16D81931008A5E83 /* cameraTabBarItem@2x.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -216,6 +245,7 @@
 		3D60FA8816D7C85300AC73A2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7E7EBBB516D82913008A5E83 /* TableViewControllers */,
 				3D60FA9B16D7CCB400AC73A2 /* NavigationControllers */,
 				3D60FA9A16D7CCA900AC73A2 /* ViewControllers */,
 				3D60FA9916D7CC9A00AC73A2 /* TabBarControllers */,
@@ -309,6 +339,17 @@
 			path = Vendors/PSTCollectionView;
 			sourceTree = "<group>";
 		};
+		7E7EBBB516D82913008A5E83 /* TableViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7E7EBBBA16D83620008A5E83 /* JTItemsViewController.h */,
+				7E7EBBBB16D83620008A5E83 /* JTItemsViewController.m */,
+				7E7EBBBD16D83742008A5E83 /* JTBuyListViewController.h */,
+				7E7EBBBE16D83742008A5E83 /* JTBuyListViewController.m */,
+			);
+			name = TableViewControllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -365,6 +406,12 @@
 				3D60FA7216D7C60000AC73A2 /* Default.png in Resources */,
 				3D60FA7416D7C60000AC73A2 /* Default@2x.png in Resources */,
 				3D60FA7616D7C60000AC73A2 /* Default-568h@2x.png in Resources */,
+				7E7EBBAE16D81931008A5E83 /* cameraTabBarItem.png in Resources */,
+				7E7EBBAF16D81931008A5E83 /* cameraTabBarItem@2x.png in Resources */,
+				7E7EBBB316D825BD008A5E83 /* bg_CategoryCell.png in Resources */,
+				7E7EBBB416D825BD008A5E83 /* bg_CategoryCell@2x.png in Resources */,
+				7E7EBBB816D82DFB008A5E83 /* bg_CategoryCellwithTape.png in Resources */,
+				7E7EBBB916D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +445,9 @@
 				3D60FAD816D7D52B00AC73A2 /* PSTGridLayoutSection.m in Sources */,
 				3D60FADB16D7D56600AC73A2 /* JTCategoryViewController.m in Sources */,
 				3D60FAE216D7E22300AC73A2 /* JTCategoryItemCell.m in Sources */,
+				7E7EBBBC16D83620008A5E83 /* JTItemsViewController.m in Sources */,
+				7E7EBBBF16D83742008A5E83 /* JTBuyListViewController.m in Sources */,
+				7E7EBBC216D8862D008A5E83 /* NSString+JTAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +558,7 @@
 				3D60FA7B16D7C60000AC73A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

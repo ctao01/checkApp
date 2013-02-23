@@ -24,6 +24,12 @@
     self.nvc = [[UINavigationController alloc]initWithRootViewController:vc];
     self.window.rootViewController = self.nvc;
     
+    /*gloabl style note
+        main color tone: #408dcc
+        contrast color: 241, 89 , 19
+     
+     */
+    
     return YES;
 }
 
