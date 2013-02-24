@@ -18,7 +18,7 @@ static CGFloat SubTitleLabelHeight = 22;
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         
-        self.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_CategoryCellwithTape"]];
+        self.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_CategoryCellwithTape_white"]];
 //        UIView *background = [[UIView alloc] init];
 //        background.backgroundColor = [UIColor colorWithRed:0.109 green:0.419 blue:0.000 alpha:1.000];
 //        self.selectedBackgroundView = background;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JTCategoryViewController : UIViewController <PSTCollectionViewDataSource, PSTCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface JTCategoryViewController : UIViewController <PSTCollectionViewDataSource, PSTCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate , UIAlertViewDelegate>
 
 @property (nonatomic,strong) NSArray * categories;
 - (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath;

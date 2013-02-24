@@ -50,16 +50,16 @@ static float rgbcolor(value)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"Category";
-    
+    if (self.itemImagePath || self.itemName) self.navigationItem.title = @"Choose Category";
+    else self.navigationItem.title = @"Category";
 	[self generateData];
     [self createGridView];
     
-    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-    searchBar.tintColor = [UIColor colorWithRed:rgbcolor(188) green:rgbcolor(215) blue:rgbcolor(237) alpha:0.4f];
-    [self.view addSubview:searchBar];
+//    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+//    searchBar.tintColor = [UIColor colorWithRed:rgbcolor(188) green:rgbcolor(215) blue:rgbcolor(237) alpha:0.4f];
+//    [self.view addSubview:searchBar];
     
-    self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(230) green:rgbcolor(230) blue:rgbcolor(230) alpha:1.0f];
+    self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(215) green:rgbcolor(211) blue:rgbcolor(202) alpha:1.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,7 +127,7 @@ static float rgbcolor(value)
     [layout setMinimumInteritemSpacing:Minimum_Interitem_Spacing];
     [layout setMinimumLineSpacing:Minimum_Line_Spacing];
     
-    CGRect rect = UIEdgeInsetsInsetRect([self.view bounds], UIEdgeInsetsMake(50.0f, 0.0f, 0.0f, 0.0f));
+    CGRect rect = UIEdgeInsetsInsetRect([self.view bounds], UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f));
     
     _gridView = [[PSUICollectionView alloc] initWithFrame:rect collectionViewLayout:layout];
     _gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -174,7 +174,7 @@ static float rgbcolor(value)
 
 - (UIEdgeInsets)collectionView:(PSUICollectionView *)collectionView layout:(PSUICollectionView*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake( 0.0f,
+    return UIEdgeInsetsMake( 44.0f,
                             (self.view.bounds.size.width -300.0f - Minimum_Interitem_Spacing * 2)/2,
                             0.0f,
                             (self.view.bounds.size.width -300.0f- Minimum_Interitem_Spacing * 2)/2);
@@ -199,7 +199,7 @@ static float rgbcolor(value)
 
 - (void)collectionView:(PSTCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.tabBarController.selectedIndex == 2)
+    if (self.itemImagePath || self.itemName)
     {
         JTObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
                                                           inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
@@ -221,11 +221,15 @@ static float rgbcolor(value)
         }
         else
         {
-            [self.tabBarController setSelectedIndex:0];
+//            [self.tabBarController setSelectedIndex:0];
+//            [self dismissViewControllerAnimated:YES completion:^{}];
+            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Done" message:@"The item has been saved" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
+            [alertView show];
+            
         }
         
     }
-    else if (self.tabBarController.selectedIndex == 0)
+    else
     {
         
         JTItemsViewController * vc = [[JTItemsViewController alloc]initWithStyle:UITableViewStylePlain];
@@ -277,5 +281,13 @@ static float rgbcolor(value)
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return YES;
 }
+
+#pragma mark - UIAlertView Delegate
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
 
 @end

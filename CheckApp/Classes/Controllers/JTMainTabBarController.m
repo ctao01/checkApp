@@ -15,6 +15,7 @@
 @interface JTMainTabBarController ()
 {
     UIImage * originImage;
+    NSUInteger currentIndex;
 }
 - (void) addCenterButtonWithImage:(UIImage*)buttonImage;
 @end
@@ -117,7 +118,7 @@
 }
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    
+    currentIndex = self.selectedIndex;
 }
 
 #pragma mark - UIImagePickerController Delegate
@@ -135,7 +136,8 @@
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
-#pragma mark - 
+#pragma mark - UIAlertViewDelegate
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex)
@@ -147,13 +149,16 @@
         
         JTCategoryViewController * vc = [[JTCategoryViewController alloc]initWithNewItemName:[alertView textFieldAtIndex:0].text iconImagePath:imagePath];
         [self dismissViewControllerAnimated:YES completion:^{
+            UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:vc];
+            [[self.viewControllers objectAtIndex:2] presentViewController:nc animated:YES completion:^{
+                [self setSelectedIndex:currentIndex];
+            }];
             originImage = nil;
             NSLog(@"completion");
          }];
-        NSLog(@"UINavigationController");
 
-        UINavigationController * nc = (UINavigationController*)[self.viewControllers objectAtIndex:2];
-        [nc pushViewController:vc animated:YES];
+//        UINavigationController * nc = (UINavigationController*)[self.viewControllers objectAtIndex:2];
+//        [nc pushViewController:vc animated:YES];
     }
 }
 
