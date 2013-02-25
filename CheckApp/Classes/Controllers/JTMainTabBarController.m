@@ -9,13 +9,16 @@
 #import "JTMainTabBarController.h"
 #import "JTCategoryViewController.h"
 #import "JTBuyListViewController.h"
-
+#import "JTModalView.h"
 #import "NSString+JTAdditions.h"
 
 @interface JTMainTabBarController ()
 {
     UIImage * originImage;
     NSUInteger currentIndex;
+    
+//    UIView * view;
+    JTModalView * modalView;
 }
 - (void) addCenterButtonWithImage:(UIImage*)buttonImage;
 @end
@@ -50,6 +53,12 @@
         }
         self.viewControllers = [NSArray arrayWithArray:array];
         self.selectedIndex = 0;
+        
+//        CGRect rect = self.view.frame;
+//        view = [[UIView alloc]initWithFrame:CGRectMake(rect.size.width, 0.0f, 240.0f, 180.0f)];
+//        view.center = CGPointMake(view.center.x, self.view.center.y);
+//        view.backgroundColor = [UIColor redColor];
+//        [self.view addSubview:view];
 
     }
     return self;
@@ -99,7 +108,7 @@
     picker.allowsEditing = NO;
     
     [self presentViewController:picker animated:YES completion:^{
-        [self setSelectedIndex:2];
+//        [self setSelectedIndex:2];
     }];
 }
 
@@ -126,9 +135,29 @@
 {
     originImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     
-    UIAlertView * av = [[UIAlertView alloc]initWithTitle:@"Title" message:@"Please enter the name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
-    av.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [av show];
+//    UIAlertView * av = [[UIAlertView alloc]initWithTitle:@"Title" message:@"Please enter the name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+//    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [av show];
+    self.selectedIndex = currentIndex;
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+//        [UIView animateWithDuration:0.8f
+//                              delay:0.0f
+//                            options: UIViewAnimationCurveEaseOut
+//                         animations:^{
+//                             view.center = self.view.center;
+//                         }
+//                         completion:^(BOOL finished){
+//                             NSLog(@"Done!");
+//                         }];
+
+        modalView = [[JTModalView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+        modalView.opaque = NO;
+        modalView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.75f];
+        [self.view addSubview:modalView];
+        
+    }];
+    
 
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

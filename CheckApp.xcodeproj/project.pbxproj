@@ -50,6 +50,9 @@
 		7E7EBBC216D8862D008A5E83 /* NSString+JTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EBBC116D8862D008A5E83 /* NSString+JTAdditions.m */; };
 		7E7EBBC516D92C85008A5E83 /* bg_CategoryCellwithTape_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBC316D92C85008A5E83 /* bg_CategoryCellwithTape_white.png */; };
 		7E7EBBC616D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBC416D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png */; };
+		7E7EBBC916DA87D5008A5E83 /* JTModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EBBC816DA87D4008A5E83 /* JTModalView.m */; };
+		7E7EBBD016DBFCEB008A5E83 /* modalButton_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBCE16DBFCEB008A5E83 /* modalButton_green.png */; };
+		7E7EBBD116DBFCEB008A5E83 /* modalButton_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7EBBCF16DBFCEB008A5E83 /* modalButton_green@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +127,10 @@
 		7E7EBBC116D8862D008A5E83 /* NSString+JTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+JTAdditions.m"; path = "Classes/Categories/NSString+JTAdditions.m"; sourceTree = "<group>"; };
 		7E7EBBC316D92C85008A5E83 /* bg_CategoryCellwithTape_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_CategoryCellwithTape_white.png; path = Assets/Backgrounds/bg_CategoryCellwithTape_white.png; sourceTree = "<group>"; };
 		7E7EBBC416D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_CategoryCellwithTape_white@2x.png"; path = "Assets/Backgrounds/bg_CategoryCellwithTape_white@2x.png"; sourceTree = "<group>"; };
+		7E7EBBC716DA87D4008A5E83 /* JTModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTModalView.h; path = Classes/Views/JTModalView.h; sourceTree = "<group>"; };
+		7E7EBBC816DA87D4008A5E83 /* JTModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTModalView.m; path = Classes/Views/JTModalView.m; sourceTree = "<group>"; };
+		7E7EBBCE16DBFCEB008A5E83 /* modalButton_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = modalButton_green.png; path = Assets/Icons/modalButton_green.png; sourceTree = "<group>"; };
+		7E7EBBCF16DBFCEB008A5E83 /* modalButton_green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "modalButton_green@2x.png"; path = "Assets/Icons/modalButton_green@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +229,8 @@
 		3D60FA8616D7C82F00AC73A2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				7E7EBBCE16DBFCEB008A5E83 /* modalButton_green.png */,
+				7E7EBBCF16DBFCEB008A5E83 /* modalButton_green@2x.png */,
 				7E7EBBC316D92C85008A5E83 /* bg_CategoryCellwithTape_white.png */,
 				7E7EBBC416D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png */,
 				7E7EBBB616D82DFB008A5E83 /* bg_CategoryCellwithTape.png */,
@@ -262,6 +271,8 @@
 		3D60FA8B16D7C88D00AC73A2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7E7EBBC716DA87D4008A5E83 /* JTModalView.h */,
+				7E7EBBC816DA87D4008A5E83 /* JTModalView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -420,6 +431,8 @@
 				7E7EBBB916D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png in Resources */,
 				7E7EBBC516D92C85008A5E83 /* bg_CategoryCellwithTape_white.png in Resources */,
 				7E7EBBC616D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png in Resources */,
+				7E7EBBD016DBFCEB008A5E83 /* modalButton_green.png in Resources */,
+				7E7EBBD116DBFCEB008A5E83 /* modalButton_green@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +469,7 @@
 				7E7EBBBC16D83620008A5E83 /* JTItemsViewController.m in Sources */,
 				7E7EBBBF16D83742008A5E83 /* JTBuyListViewController.m in Sources */,
 				7E7EBBC216D8862D008A5E83 /* NSString+JTAdditions.m in Sources */,
+				7E7EBBC916DA87D5008A5E83 /* JTModalView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
