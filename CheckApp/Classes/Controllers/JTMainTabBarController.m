@@ -9,8 +9,11 @@
 #import "JTMainTabBarController.h"
 #import "JTCategoryViewController.h"
 #import "JTBuyListViewController.h"
-#import "JTModalView.h"
 #import "NSString+JTAdditions.h"
+
+#import "JTObject.h"
+#import "JTCategory.h"
+#import "JTObjectManager.h"
 
 @interface JTMainTabBarController ()
 {
@@ -18,12 +21,14 @@
     NSUInteger currentIndex;
     
 //    UIView * view;
-    JTModalView * modalView;
+    
 }
 - (void) addCenterButtonWithImage:(UIImage*)buttonImage;
 @end
 
 @implementation JTMainTabBarController
+@synthesize object;
+@synthesize modalView;
 
 - (id)init
 {
@@ -35,6 +40,7 @@
         NSMutableArray * array = [[NSMutableArray alloc]init];
         JTCategoryViewController * vc1 = [[JTCategoryViewController alloc]init];
         UINavigationController * nc1 = [[UINavigationController alloc]initWithRootViewController:vc1];
+        vc1.navigationItem.title = @"Category";
         nc1.tabBarItem.title = @"Category";
         [array addObject:nc1];
         
@@ -53,12 +59,6 @@
         }
         self.viewControllers = [NSArray arrayWithArray:array];
         self.selectedIndex = 0;
-        
-//        CGRect rect = self.view.frame;
-//        view = [[UIView alloc]initWithFrame:CGRectMake(rect.size.width, 0.0f, 240.0f, 180.0f)];
-//        view.center = CGPointMake(view.center.x, self.view.center.y);
-//        view.backgroundColor = [UIColor redColor];
-//        [self.view addSubview:view];
 
     }
     return self;
@@ -78,6 +78,49 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Call Form Modal View
+
+-(void) showCategoryList
+{
+    JTCategoryViewController * vc1 = [[JTCategoryViewController alloc]initFromViewController:self];
+    UINavigationController * nc1 = [[UINavigationController alloc]initWithRootViewController:vc1];
+    vc1.navigationItem.title = @"Select A Category";
+    
+    [self presentViewController:nc1 animated:YES completion:^{}];
+    
+}
+
+- (void) cancelCreating
+{
+    UIView * view = [self.view viewWithTag:1020];
+    if (view) [view removeFromSuperview];
+    self.object = nil;
+}
+
+- (void) completeCreating
+{
+    [self.object setName:self.modalView.tf.text];
+    int days = [[(JTCategory*)self.object.category period]intValue];
+    [self.object setBuyInDate:[NSDate date]];
+    [self.object setExpiredDate:[[NSDate date]dateByAddingTimeInterval: 60 * 60 * 24 * days]];
+    [self.object setToBuy:NO];
+    [self.object setToBuyDate:nil];
+    [self.object setImagePath:nil];
+    
+    NSError *error;
+    if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
+    {
+        NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+    }
+    else
+    {
+        NSLog(@"%@",object.category.title);
+        
+    }
+    UIView * view = [self.view viewWithTag:1020];
+    if (view) [view removeFromSuperview];
+}
+
 #pragma mark - Capture Method
 
 - (void) addCenterButtonWithImage:(UIImage *)buttonImage
@@ -85,7 +128,9 @@
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(activateCamera) forControlEvents:UIControlEventTouchUpInside];
+//    [button addTarget:self action:@selector(activateCamera) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(addNewItem) forControlEvents:UIControlEventTouchUpInside];
+
     
     CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
     if (heightDifference < 0)
@@ -99,6 +144,17 @@
     
     [self.view addSubview:button];
 }
+
+- (void) addNewItem
+{
+    self.modalView = [[JTModalView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    self.modalView.opaque = NO;
+    self.modalView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.75f];
+    self.modalView.viewController = self;
+    self.modalView.tag = 1020;
+    [self.view addSubview:self.modalView];
+}
+
 
 - (void)activateCamera
 {    
@@ -131,6 +187,7 @@
 }
 
 #pragma mark - UIImagePickerController Delegate
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     originImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
@@ -139,24 +196,31 @@
 //    av.alertViewStyle = UIAlertViewStylePlainTextInput;
 //    [av show];
     self.selectedIndex = currentIndex;
+    self.object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
+                                                inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
     
     [self dismissViewControllerAnimated:YES completion:^{
-//        [UIView animateWithDuration:0.8f
-//                              delay:0.0f
-//                            options: UIViewAnimationCurveEaseOut
-//                         animations:^{
-//                             view.center = self.view.center;
-//                         }
-//                         completion:^(BOOL finished){
-//                             NSLog(@"Done!");
-//                         }];
+        /*[UIView animateWithDuration:0.8f
+                              delay:0.0f
+                            options: UIViewAnimationCurveEaseOut
+                         animations:^{
+                             view.center = self.view.center;
+                         }
+                         completion:^(BOOL finished){
+                             NSLog(@"Done!");
+                         }];
 
-        modalView = [[JTModalView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-        modalView.opaque = NO;
-        modalView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.75f];
-        [self.view addSubview:modalView];
-        
+        self.modalView = [[JTModalView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+        self.modalView.opaque = NO;
+        self.modalView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.75f];
+        self.modalView.viewController = self;
+        self.modalView.tag = 1020;
+        [self.view addSubview:self.modalView];*/
+        [self.modalView.imgView setImage:originImage];
+        [self.modalView.imgView layoutIfNeeded];
     }];
+    
+    
     
 
 }
@@ -164,7 +228,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
-
+/*
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -190,5 +254,5 @@
 //        [nc pushViewController:vc animated:YES];
     }
 }
-
+*/
 @end

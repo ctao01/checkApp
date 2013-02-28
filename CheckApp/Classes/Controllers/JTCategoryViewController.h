@@ -12,5 +12,6 @@
 
 @property (nonatomic,strong) NSArray * categories;
 - (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath;
+- (id) initFromViewController:(UIViewController*)vc;
 
 @end

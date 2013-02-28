@@ -13,6 +13,7 @@
 #import "JTCategoryItemCell.h"
 
 #import "JTItemsViewController.h"
+#import "JTMainTabBarController.h"
 
 #define Minimum_Interitem_Spacing 3.0f
 #define Minimum_Line_Spacing 5.0f
@@ -30,7 +31,7 @@ static float rgbcolor(value)
 }
 @property (nonatomic , retain) NSString * itemName;
 @property (nonatomic , retain) NSString * itemImagePath;
-
+@property (nonatomic , retain) JTMainTabBarController * tbc;
 @end
 
 @implementation JTCategoryViewController
@@ -47,11 +48,19 @@ static float rgbcolor(value)
     return self;
 }
 
+- (id) initFromViewController:(UIViewController*)vc
+{
+    self = [super init];
+    if (self)
+        self.tbc = (JTMainTabBarController*)vc;
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (self.itemImagePath || self.itemName) self.navigationItem.title = @"Choose Category";
-    else self.navigationItem.title = @"Category";
+//    if (self.itemImagePath || self.itemName) self.navigationItem.title = @"Choose Category";
+//    else self.navigationItem.title = @"Category";
 	[self generateData];
     [self createGridView];
     
@@ -199,34 +208,41 @@ static float rgbcolor(value)
 
 - (void)collectionView:(PSTCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.itemImagePath || self.itemName)
+//    if (self.itemImagePath || self.itemName)
+    if ([self.navigationItem.title isEqualToString:@"Select A Category"])
     {
         JTObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
                                                           inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
-        NSLog(@"%@",[categories objectAtIndex:indexPath.row]);
-        [object setCategory:[categories objectAtIndex:indexPath.item]];
-        [object setName:self.itemName];
-        [object setBuyInDate:[NSDate date]];
-        
-        int days = [[[categories objectAtIndex:indexPath.row] period]intValue];
-        [object setExpiredDate:[[NSDate date]dateByAddingTimeInterval: 60 * 60 * 24 * days]];
-        [object setToBuy:NO];
-        [object setToBuyDate:nil];
-        [object setImagePath:self.itemImagePath];
-        
-        NSError *error;
-        if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
-        {
-            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
-        }
-        else
-        {
-//            [self.tabBarController setSelectedIndex:0];
-//            [self dismissViewControllerAnimated:YES completion:^{}];
-            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Done" message:@"The item has been saved" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
-            [alertView show];
-            
-        }
+//        NSLog(@"%@",[categories objectAtIndex:indexPath.row]);
+//        [object setCategory:[categories objectAtIndex:indexPath.item]];
+        [self.tbc.object setCategory:[categories objectAtIndex:indexPath.item]];
+        [self dismissViewControllerAnimated:YES completion:^{
+//            [self.tbc.modalView.catBtn setTitle:[[categories objectAtIndex:indexPath.item] title] forState:UIControlStateNormal];
+//            [self.tbc.modalView setNeedsDisplay];
+            [self.tbc.modalView setCategory:[[categories objectAtIndex:indexPath.item] title]];
+        }];
+//        [object setName:self.itemName];
+//        [object setBuyInDate:[NSDate date]];
+//
+//        int days = [[[categories objectAtIndex:indexPath.row] period]intValue];
+//        [object setExpiredDate:[[NSDate date]dateByAddingTimeInterval: 60 * 60 * 24 * days]];
+//        [object setToBuy:NO];
+//        [object setToBuyDate:nil];
+//        [object setImagePath:self.itemImagePath];
+//        
+//        NSError *error;
+//        if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
+//        {
+//            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+//        }
+//        else
+//        {
+////            [self.tabBarController setSelectedIndex:0];
+////            [self dismissViewControllerAnimated:YES completion:^{}];
+//            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Done" message:@"The item has been saved" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
+//            [alertView show];
+//            
+//        }
         
     }
     else

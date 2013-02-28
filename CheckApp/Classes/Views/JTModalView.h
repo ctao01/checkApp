@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JTModalView : UIView
+@interface JTModalView : UIView < UITextFieldDelegate >
 
+@property (nonatomic , retain) UIViewController * viewController;
+@property (nonatomic , retain) UITextField * tf;
+@property (nonatomic , retain) UIImageView * imgView;
+@property (nonatomic , assign) NSString * category;
 @end
