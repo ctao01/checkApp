@@ -143,7 +143,7 @@ static float rgbcolor(value)
     [layout setMinimumInteritemSpacing:Minimum_Interitem_Spacing];
     [layout setMinimumLineSpacing:Minimum_Line_Spacing];
     
-    
+    CGRect rect = UIEdgeInsetsInsetRect([self.view bounds], UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f));
     _gridView = [[PSUICollectionView alloc] initWithFrame:rect collectionViewLayout:layout];
     _gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _gridView.delegate = self;
