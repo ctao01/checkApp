@@ -70,6 +70,8 @@
 	// Do any additional setup after loading the view.
     
     [self addCenterButtonWithImage:[UIImage imageNamed:@"cameraTabBarItem"]];
+
+
 }
 
 - (void)didReceiveMemoryWarning

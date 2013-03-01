@@ -18,6 +18,10 @@
 #define Minimum_Interitem_Spacing 3.0f
 #define Minimum_Line_Spacing 5.0f
 
+#define iPhone5_Screen_Height 568.0f
+#define iPhone4_Screen_Height 480.0f
+//#define DEVICE_OS [[[UIDevice currentDevice] systemVersion] intValue]
+
 static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 static float rgbcolor(value)
 {
@@ -27,7 +31,8 @@ static float rgbcolor(value)
 @interface JTCategoryViewController ()
 {
     PSUICollectionView * _gridView;
-    UISearchBar * searchBar;
+    
+    ADBannerView * adView;
 }
 @property (nonatomic , retain) NSString * itemName;
 @property (nonatomic , retain) NSString * itemImagePath;
@@ -64,10 +69,12 @@ static float rgbcolor(value)
 	[self generateData];
     [self createGridView];
     
-//    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-//    searchBar.tintColor = [UIColor colorWithRed:rgbcolor(188) green:rgbcolor(215) blue:rgbcolor(237) alpha:0.4f];
-//    [self.view addSubview:searchBar];
-    
+    adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+//    adView.requiredContentSizeIdentifiers = [NSSet setWithObject:ADBannerContentSizeIdentifierLandscape];
+//    adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
+    [self.view addSubview:adView];
+    adView.delegate = self;
+    adView.frame = CGRectOffset(adView.frame, 0, self.view.frame.size.height - 44 - 49 - 50.0f ); //TODO:define
     self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(215) green:rgbcolor(211) blue:rgbcolor(202) alpha:1.0f];
 }
 
@@ -136,14 +143,12 @@ static float rgbcolor(value)
     [layout setMinimumInteritemSpacing:Minimum_Interitem_Spacing];
     [layout setMinimumLineSpacing:Minimum_Line_Spacing];
     
-    CGRect rect = UIEdgeInsetsInsetRect([self.view bounds], UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f));
     
     _gridView = [[PSUICollectionView alloc] initWithFrame:rect collectionViewLayout:layout];
     _gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _gridView.delegate = self;
     _gridView.dataSource = self;
     _gridView.backgroundColor  = [UIColor clearColor];
-//    _gridView.backgroundColor = [UIColor colorWithRed:0.135 green:0.341 blue:0.000 alpha:1.000];
 
     [_gridView registerClass:[JTCategoryItemCell class] forCellWithReuseIdentifier:CollectionViewCellIdentifier];
     
@@ -178,15 +183,31 @@ static float rgbcolor(value)
 }
 
 - (CGSize)collectionView:(PSUICollectionView *)collectionView layout:(PSUICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(100.0f, 100.0f);
+    if ( [UIScreen mainScreen].bounds.size.height == 568.0) return CGSizeMake(100.0f, 100.0f);
+    else return CGSizeMake(100.0f * iPhone4_Screen_Height / iPhone5_Screen_Height, 100.0f * iPhone4_Screen_Height / iPhone5_Screen_Height);
 }
 
 - (UIEdgeInsets)collectionView:(PSUICollectionView *)collectionView layout:(PSUICollectionView*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake( 44.0f,
-                            (self.view.bounds.size.width -300.0f - Minimum_Interitem_Spacing * 2)/2,
+    float size, interItemSpace,topInset;
+    
+    if ([UIScreen mainScreen].bounds.size.height == 568.0)
+    {
+        size = 100.0f;
+        interItemSpace = Minimum_Interitem_Spacing;
+        topInset = 40.0f;
+    }
+    else
+    {
+        size = 100.0f * iPhone4_Screen_Height / iPhone5_Screen_Height;
+        interItemSpace = Minimum_Interitem_Spacing * iPhone5_Screen_Height / iPhone4_Screen_Height;
+        topInset = 20.0f;
+    }
+    
+    return UIEdgeInsetsMake(topInset,
+                            (self.view.bounds.size.width - size*3 - interItemSpace * 2)/2,
                             0.0f,
-                            (self.view.bounds.size.width -300.0f- Minimum_Interitem_Spacing * 2)/2);
+                            (self.view.bounds.size.width - size*3-  interItemSpace * 2)/2);
 }
 
 - (NSInteger)collectionView:(PSUICollectionView *)view numberOfItemsInSection:(NSInteger)section {
@@ -305,5 +326,39 @@ static float rgbcolor(value)
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
+#pragma mark - ADBannerView Delegate
+
+- (void)bannerViewWillLoadAd:(ADBannerView *)banner
+{
+    
+}
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    NSLog(@"bannerViewDidLoadAd");
+//    [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+//    // banner is invisible now and moved out of the screen on 50 px
+//    banner.frame = CGRectOffset(banner.frame, 0, -50);
+//    [UIView commitAnimations];
+}
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    NSLog(@"didFailToReceiveAdWithError:%@",error);
+
+}
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
+{
+    BOOL shouldExecuteAction = YES;
+    if (!willLeave && shouldExecuteAction)
+    {
+        // stop all interactive processes in the app
+        // [video pause];
+        // [audio pause];
+    }
+    return shouldExecuteAction;
+}
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner
+{
+    
+}
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
 
-@interface JTCategoryViewController : UIViewController <PSTCollectionViewDataSource, PSTCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate , UIAlertViewDelegate>
+@interface JTCategoryViewController : UIViewController <PSTCollectionViewDataSource, PSTCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate , UIAlertViewDelegate , ADBannerViewDelegate>
 
 @property (nonatomic,strong) NSArray * categories;
 - (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath;
