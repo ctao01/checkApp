@@ -114,7 +114,7 @@
     [pathThumbImg fill];
     
     self.imgView = [[UIImageView alloc]initWithFrame:UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f))];
-    self.imgView.contentMode = UIViewContentModeScaleAspectFit;
+    self.imgView.contentMode = UIViewContentModeScaleToFill;
     self.imgView.image = [UIImage imageNamed:@"btn_camera_black"];
     self.imgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     self.imgView.layer.borderWidth = 2.0f;

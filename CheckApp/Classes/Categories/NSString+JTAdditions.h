@@ -10,7 +10,7 @@
 
 @interface NSString (JTAdditions)
 
-+(NSString*) imagePathWithItemName:(NSString*)itemName;
-
++ (NSString*) imagePathWithItemName:(NSString*)itemName;
++ (NSString*) dateFormatterShortStyle:(NSDate*) date;
 
 @end

@@ -19,8 +19,19 @@
     [f setDateFormat:@"yyyyMMddhhmmss"];
     NSString * string = [f stringFromDate:[NSDate date]];
     
-    NSString * filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.png",itemName,string]];
+    NSString * filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",string]];
     return filePath;
+}
+
++ (NSString*) dateFormatterShortStyle:(NSDate*) date
+{
+    NSDateFormatter * df = [[NSDateFormatter alloc]init];
+    [df setDateStyle:NSDateFormatterShortStyle];
+    [df setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSString * string = [df stringFromDate:date];
+    
+    return string;
 }
 
 

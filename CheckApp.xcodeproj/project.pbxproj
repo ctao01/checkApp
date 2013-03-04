@@ -43,6 +43,21 @@
 		3D60FAD816D7D52B00AC73A2 /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D60FACB16D7D52B00AC73A2 /* PSTGridLayoutSection.m */; };
 		3D60FADB16D7D56600AC73A2 /* JTCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D60FADA16D7D56500AC73A2 /* JTCategoryViewController.m */; };
 		3D60FAE216D7E22300AC73A2 /* JTCategoryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D60FAE116D7E22300AC73A2 /* JTCategoryItemCell.m */; };
+		3D78FD7A16E51C6300C9A28C /* JTSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FD7916E51C6300C9A28C /* JTSettingsViewController.m */; };
+		3D78FD8216E51CD600C9A28C /* JTItemsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FD8116E51CD600C9A28C /* JTItemsCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3D78FD8E16E5238C00C9A28C /* deleteBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8616E5238C00C9A28C /* deleteBtn.png */; };
+		3D78FD8F16E5238C00C9A28C /* deleteBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8716E5238C00C9A28C /* deleteBtn@2x.png */; };
+		3D78FD9016E5238C00C9A28C /* expiredBtn_expired.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8816E5238C00C9A28C /* expiredBtn_expired.png */; };
+		3D78FD9116E5238C00C9A28C /* expiredBtn_expired@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8916E5238C00C9A28C /* expiredBtn_expired@2x.png */; };
+		3D78FD9216E5238C00C9A28C /* toBuyBtn_disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8A16E5238C00C9A28C /* toBuyBtn_disable.png */; };
+		3D78FD9316E5238C00C9A28C /* toBuyBtn_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8B16E5238C00C9A28C /* toBuyBtn_disable@2x.png */; };
+		3D78FD9416E5238C00C9A28C /* toBuyBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8C16E5238C00C9A28C /* toBuyBtn.png */; };
+		3D78FD9516E5238C00C9A28C /* toBuyBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD8D16E5238C00C9A28C /* toBuyBtn@2x.png */; };
+		3D78FD9816E52A6B00C9A28C /* btn_expired.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD9616E52A6B00C9A28C /* btn_expired.png */; };
+		3D78FD9916E52A6B00C9A28C /* btn_expired@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD9716E52A6B00C9A28C /* btn_expired@2x.png */; };
+		3D78FDA016E53A1400C9A28C /* btn_placeholder_temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD9E16E53A1400C9A28C /* btn_placeholder_temp.png */; };
+		3D78FDA116E53A1400C9A28C /* btn_placeholder_temp@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD9F16E53A1400C9A28C /* btn_placeholder_temp@2x copy.png */; };
+		3D78FDAC16E54CF700C9A28C /* UIImage+JTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDAB16E54CF700C9A28C /* UIImage+JTAdditions.m */; };
 		3DBA6A9F16E00E40009719DF /* btn_camera_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA6A9D16E00E40009719DF /* btn_camera_black.png */; };
 		3DBA6AA016E00E40009719DF /* btn_camera_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */; };
 		3DBA6AA216E014C7009719DF /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBA6AA116E014C7009719DF /* iAd.framework */; };
@@ -122,6 +137,24 @@
 		3D60FADA16D7D56500AC73A2 /* JTCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCategoryViewController.m; path = Classes/Controllers/JTCategoryViewController.m; sourceTree = "<group>"; };
 		3D60FAE016D7E22300AC73A2 /* JTCategoryItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCategoryItemCell.h; path = Classes/Cells/JTCategoryItemCell.h; sourceTree = "<group>"; };
 		3D60FAE116D7E22300AC73A2 /* JTCategoryItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCategoryItemCell.m; path = Classes/Cells/JTCategoryItemCell.m; sourceTree = "<group>"; };
+		3D78FD7816E51C6300C9A28C /* JTSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTSettingsViewController.h; path = Classes/Controllers/JTSettingsViewController.h; sourceTree = "<group>"; };
+		3D78FD7916E51C6300C9A28C /* JTSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTSettingsViewController.m; path = Classes/Controllers/JTSettingsViewController.m; sourceTree = "<group>"; };
+		3D78FD8016E51CD600C9A28C /* JTItemsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTItemsCell.h; path = Classes/Cells/JTItemsCell.h; sourceTree = "<group>"; };
+		3D78FD8116E51CD600C9A28C /* JTItemsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTItemsCell.m; path = Classes/Cells/JTItemsCell.m; sourceTree = "<group>"; };
+		3D78FD8616E5238C00C9A28C /* deleteBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deleteBtn.png; path = Assets/Icons/deleteBtn.png; sourceTree = "<group>"; };
+		3D78FD8716E5238C00C9A28C /* deleteBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "deleteBtn@2x.png"; path = "Assets/Icons/deleteBtn@2x.png"; sourceTree = "<group>"; };
+		3D78FD8816E5238C00C9A28C /* expiredBtn_expired.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = expiredBtn_expired.png; path = Assets/Icons/expiredBtn_expired.png; sourceTree = "<group>"; };
+		3D78FD8916E5238C00C9A28C /* expiredBtn_expired@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "expiredBtn_expired@2x.png"; path = "Assets/Icons/expiredBtn_expired@2x.png"; sourceTree = "<group>"; };
+		3D78FD8A16E5238C00C9A28C /* toBuyBtn_disable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toBuyBtn_disable.png; path = Assets/Icons/toBuyBtn_disable.png; sourceTree = "<group>"; };
+		3D78FD8B16E5238C00C9A28C /* toBuyBtn_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "toBuyBtn_disable@2x.png"; path = "Assets/Icons/toBuyBtn_disable@2x.png"; sourceTree = "<group>"; };
+		3D78FD8C16E5238C00C9A28C /* toBuyBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toBuyBtn.png; path = Assets/Icons/toBuyBtn.png; sourceTree = "<group>"; };
+		3D78FD8D16E5238C00C9A28C /* toBuyBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "toBuyBtn@2x.png"; path = "Assets/Icons/toBuyBtn@2x.png"; sourceTree = "<group>"; };
+		3D78FD9616E52A6B00C9A28C /* btn_expired.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_expired.png; path = Assets/Icons/btn_expired.png; sourceTree = "<group>"; };
+		3D78FD9716E52A6B00C9A28C /* btn_expired@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_expired@2x.png"; path = "Assets/Icons/btn_expired@2x.png"; sourceTree = "<group>"; };
+		3D78FD9E16E53A1400C9A28C /* btn_placeholder_temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_placeholder_temp.png; path = Assets/btn_placeholder_temp.png; sourceTree = "<group>"; };
+		3D78FD9F16E53A1400C9A28C /* btn_placeholder_temp@2x copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_placeholder_temp@2x copy.png"; path = "Assets/btn_placeholder_temp@2x copy.png"; sourceTree = "<group>"; };
+		3D78FDAA16E54CF700C9A28C /* UIImage+JTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+JTAdditions.h"; path = "Classes/Categories/UIImage+JTAdditions.h"; sourceTree = "<group>"; };
+		3D78FDAB16E54CF700C9A28C /* UIImage+JTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+JTAdditions.m"; path = "Classes/Categories/UIImage+JTAdditions.m"; sourceTree = "<group>"; };
 		3DBA6A9D16E00E40009719DF /* btn_camera_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_camera_black.png; path = Assets/Icons/btn_camera_black.png; sourceTree = "<group>"; };
 		3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_camera_black@2x.png"; path = "Assets/Icons/btn_camera_black@2x.png"; sourceTree = "<group>"; };
 		3DBA6AA116E014C7009719DF /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -234,6 +267,8 @@
 			children = (
 				7E7EBBC016D8862D008A5E83 /* NSString+JTAdditions.h */,
 				7E7EBBC116D8862D008A5E83 /* NSString+JTAdditions.m */,
+				3D78FDAA16E54CF700C9A28C /* UIImage+JTAdditions.h */,
+				3D78FDAB16E54CF700C9A28C /* UIImage+JTAdditions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -241,18 +276,10 @@
 		3D60FA8616D7C82F00AC73A2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				3DBA6A9D16E00E40009719DF /* btn_camera_black.png */,
-				3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */,
-				3D19159916DC6CDF0085B198 /* btn_close_red_center.png */,
-				3D19159A16DC6CDF0085B198 /* btn_close_red_center@2x.png */,
-				3D19159B16DC6CDF0085B198 /* btn_modal.png */,
-				3D19159C16DC6CDF0085B198 /* btn_modal@2x.png */,
-				7E7EBBC316D92C85008A5E83 /* bg_CategoryCellwithTape_white.png */,
-				7E7EBBC416D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png */,
-				7E7EBBB616D82DFB008A5E83 /* bg_CategoryCellwithTape.png */,
-				7E7EBBB716D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png */,
-				7E7EBBB116D825BD008A5E83 /* bg_CategoryCell.png */,
-				7E7EBBB216D825BD008A5E83 /* bg_CategoryCell@2x.png */,
+				3D78FD9E16E53A1400C9A28C /* btn_placeholder_temp.png */,
+				3D78FD9F16E53A1400C9A28C /* btn_placeholder_temp@2x copy.png */,
+				3D78FD8416E5235800C9A28C /* Buttons */,
+				3D78FD8516E5236300C9A28C /* Backgrounds */,
 				7E7EBBAC16D81931008A5E83 /* cameraTabBarItem.png */,
 				7E7EBBAD16D81931008A5E83 /* cameraTabBarItem@2x.png */,
 			);
@@ -298,6 +325,8 @@
 			children = (
 				3D60FAE016D7E22300AC73A2 /* JTCategoryItemCell.h */,
 				3D60FAE116D7E22300AC73A2 /* JTCategoryItemCell.m */,
+				3D78FD8016E51CD600C9A28C /* JTItemsCell.h */,
+				3D78FD8116E51CD600C9A28C /* JTItemsCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -372,6 +401,42 @@
 			path = Vendors/PSTCollectionView;
 			sourceTree = "<group>";
 		};
+		3D78FD8416E5235800C9A28C /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				3D78FD9616E52A6B00C9A28C /* btn_expired.png */,
+				3D78FD9716E52A6B00C9A28C /* btn_expired@2x.png */,
+				3D78FD8616E5238C00C9A28C /* deleteBtn.png */,
+				3D78FD8716E5238C00C9A28C /* deleteBtn@2x.png */,
+				3D78FD8816E5238C00C9A28C /* expiredBtn_expired.png */,
+				3D78FD8916E5238C00C9A28C /* expiredBtn_expired@2x.png */,
+				3D78FD8A16E5238C00C9A28C /* toBuyBtn_disable.png */,
+				3D78FD8B16E5238C00C9A28C /* toBuyBtn_disable@2x.png */,
+				3D78FD8C16E5238C00C9A28C /* toBuyBtn.png */,
+				3D78FD8D16E5238C00C9A28C /* toBuyBtn@2x.png */,
+				3DBA6A9D16E00E40009719DF /* btn_camera_black.png */,
+				3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */,
+				3D19159916DC6CDF0085B198 /* btn_close_red_center.png */,
+				3D19159A16DC6CDF0085B198 /* btn_close_red_center@2x.png */,
+				3D19159B16DC6CDF0085B198 /* btn_modal.png */,
+				3D19159C16DC6CDF0085B198 /* btn_modal@2x.png */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
+		3D78FD8516E5236300C9A28C /* Backgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				7E7EBBC316D92C85008A5E83 /* bg_CategoryCellwithTape_white.png */,
+				7E7EBBC416D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png */,
+				7E7EBBB616D82DFB008A5E83 /* bg_CategoryCellwithTape.png */,
+				7E7EBBB716D82DFB008A5E83 /* bg_CategoryCellwithTape@2x.png */,
+				7E7EBBB116D825BD008A5E83 /* bg_CategoryCell.png */,
+				7E7EBBB216D825BD008A5E83 /* bg_CategoryCell@2x.png */,
+			);
+			name = Backgrounds;
+			sourceTree = "<group>";
+		};
 		7E7EBBB516D82913008A5E83 /* TableViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +444,8 @@
 				7E7EBBBB16D83620008A5E83 /* JTItemsViewController.m */,
 				7E7EBBBD16D83742008A5E83 /* JTBuyListViewController.h */,
 				7E7EBBBE16D83742008A5E83 /* JTBuyListViewController.m */,
+				3D78FD7816E51C6300C9A28C /* JTSettingsViewController.h */,
+				3D78FD7916E51C6300C9A28C /* JTSettingsViewController.m */,
 			);
 			name = TableViewControllers;
 			sourceTree = "<group>";
@@ -453,6 +520,18 @@
 				3D1915A016DC6CDF0085B198 /* btn_modal@2x.png in Resources */,
 				3DBA6A9F16E00E40009719DF /* btn_camera_black.png in Resources */,
 				3DBA6AA016E00E40009719DF /* btn_camera_black@2x.png in Resources */,
+				3D78FD8E16E5238C00C9A28C /* deleteBtn.png in Resources */,
+				3D78FD8F16E5238C00C9A28C /* deleteBtn@2x.png in Resources */,
+				3D78FD9016E5238C00C9A28C /* expiredBtn_expired.png in Resources */,
+				3D78FD9116E5238C00C9A28C /* expiredBtn_expired@2x.png in Resources */,
+				3D78FD9216E5238C00C9A28C /* toBuyBtn_disable.png in Resources */,
+				3D78FD9316E5238C00C9A28C /* toBuyBtn_disable@2x.png in Resources */,
+				3D78FD9416E5238C00C9A28C /* toBuyBtn.png in Resources */,
+				3D78FD9516E5238C00C9A28C /* toBuyBtn@2x.png in Resources */,
+				3D78FD9816E52A6B00C9A28C /* btn_expired.png in Resources */,
+				3D78FD9916E52A6B00C9A28C /* btn_expired@2x.png in Resources */,
+				3D78FDA016E53A1400C9A28C /* btn_placeholder_temp.png in Resources */,
+				3D78FDA116E53A1400C9A28C /* btn_placeholder_temp@2x copy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +569,9 @@
 				7E7EBBBF16D83742008A5E83 /* JTBuyListViewController.m in Sources */,
 				7E7EBBC216D8862D008A5E83 /* NSString+JTAdditions.m in Sources */,
 				7E7EBBC916DA87D5008A5E83 /* JTModalView.m in Sources */,
+				3D78FD7A16E51C6300C9A28C /* JTSettingsViewController.m in Sources */,
+				3D78FD8216E51CD600C9A28C /* JTItemsCell.m in Sources */,
+				3D78FDAC16E54CF700C9A28C /* UIImage+JTAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,7 +611,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -551,7 +633,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -565,6 +647,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CheckApp/CheckApp-Prefix.pch";
 				INFOPLIST_FILE = "CheckApp/CheckApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -576,6 +659,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CheckApp/CheckApp-Prefix.pch";
 				INFOPLIST_FILE = "CheckApp/CheckApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

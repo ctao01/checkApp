@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JTObject.h"
 #import "JTModalView.h"
 
 @interface JTMainTabBarController : UITabBarController < UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITabBarControllerDelegate , UIAlertViewDelegate >

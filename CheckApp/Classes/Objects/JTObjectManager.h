@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JTObject.h"
+#import "JTCategory.h"
 
 @interface JTObjectManager : NSObject
 

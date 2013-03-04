@@ -10,11 +10,7 @@
 #import "JTCategoryViewController.h"
 #import "JTBuyListViewController.h"
 #import "NSString+JTAdditions.h"
-
-#import "JTObject.h"
-#import "JTCategory.h"
-#import "JTObjectManager.h"
-
+#import "UIImage+JTAdditions.h"
 @interface JTMainTabBarController ()
 {
     UIImage * originImage;
@@ -102,25 +98,36 @@
 - (void) completeCreating
 {
     [self.object setName:self.modalView.tf.text];
-    int days = [[(JTCategory*)self.object.category period]intValue];
-    [self.object setBuyInDate:[NSDate date]];
-    [self.object setExpiredDate:[[NSDate date]dateByAddingTimeInterval: 60 * 60 * 24 * days]];
-    [self.object setToBuy:NO];
-    [self.object setToBuyDate:nil];
-    [self.object setImagePath:nil];
-    
-    NSError *error;
-    if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
+    if (self.object.name == nil || self.object.category == nil)
     {
-        NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+        UIAlertView * av = [[UIAlertView alloc]initWithTitle:@"Warning!" message:@"You have to add the title and category for your new item." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [av show];
     }
+    
     else
     {
-        NSLog(@"%@",object.category.title);
+        int days = [[(JTCategory*)self.object.category period]intValue];
+        [self.object setUpdatedDate:[NSDate date]];
+        [self.object setExpiredDate:[[NSDate date]dateByAddingTimeInterval: 60 * 60 * 24 * days]];
+        [self.object setExpired:NO];
+        [self.object setToBuy:NO];
+        [self.object setToBuyDate:nil];
+//        [self.object setImagePath:nil];
         
+        NSError *error;
+        if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
+        {
+            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+        }
+        else
+        {
+            NSLog(@"object:%@",self.object);
+            NSLog(@"object.category.title%@",self.object.category.title);
+            
+        }
+        UIView * view = [self.view viewWithTag:1020];
+        if (view) [view removeFromSuperview];
     }
-    UIView * view = [self.view viewWithTag:1020];
-    if (view) [view removeFromSuperview];
 }
 
 #pragma mark - Capture Method
@@ -149,6 +156,10 @@
 
 - (void) addNewItem
 {
+    self.object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
+                                                inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
+    
+    [self.object setImagePath:nil];
     self.modalView = [[JTModalView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.modalView.opaque = NO;
     self.modalView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.75f];
@@ -192,16 +203,19 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    originImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+//    originImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    UIImage * image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    UIImage * rotatedImage = [UIImage scaleAndRotateImage:image];
+    [self.object setImagePath:[NSString imagePathWithItemName:self.object.name]];
+    NSData * pngData = UIImagePNGRepresentation(rotatedImage);
+    [pngData writeToFile:self.object.imagePath atomically:YES];
     
-//    UIAlertView * av = [[UIAlertView alloc]initWithTitle:@"Title" message:@"Please enter the name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
-//    av.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    [av show];
     self.selectedIndex = currentIndex;
-    self.object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
-                                                inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
+//    self.object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
+//                                                inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
     
     [self dismissViewControllerAnimated:YES completion:^{
+        
         /*[UIView animateWithDuration:0.8f
                               delay:0.0f
                             options: UIViewAnimationCurveEaseOut
@@ -218,7 +232,7 @@
         self.modalView.viewController = self;
         self.modalView.tag = 1020;
         [self.view addSubview:self.modalView];*/
-        [self.modalView.imgView setImage:originImage];
+        [self.modalView.imgView setImage:image];
         [self.modalView.imgView layoutIfNeeded];
     }];
     

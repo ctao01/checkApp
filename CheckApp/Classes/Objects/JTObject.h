@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSString * imagePath;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSDate * buyInDate;
+@property (nonatomic, retain) NSDate * updatedDate;
 @property (nonatomic, retain) NSDate * expiredDate;
 @property (nonatomic) BOOL expired;
 @property (nonatomic) BOOL toBuy;

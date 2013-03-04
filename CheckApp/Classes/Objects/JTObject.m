@@ -13,7 +13,7 @@
 
 @dynamic imagePath;
 @dynamic name;
-@dynamic buyInDate;
+@dynamic updatedDate;
 @dynamic expiredDate;
 @dynamic expired;
 @dynamic toBuy;

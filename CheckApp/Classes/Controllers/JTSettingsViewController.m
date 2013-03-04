@@ -1,19 +1,18 @@
 //
-//  JTBuyListViewController.m
+//  JTSettingsViewController.m
 //  CheckApp
 //
-//  Created by Joy Tao on 2/22/13.
+//  Created by Joy Tao on 3/4/13.
 //  Copyright (c) 2013 Joy Tao. All rights reserved.
 //
 
-#import "JTBuyListViewController.h"
+#import "JTSettingsViewController.h"
 
-@interface JTBuyListViewController ()
-@property (nonatomic , retain) NSMutableArray * toBuyItems;
+@interface JTSettingsViewController ()
+
 @end
 
-@implementation JTBuyListViewController
-@synthesize toBuyItems;
+@implementation JTSettingsViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,34 +26,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Pre-Load Data
-
-- (void) generateToBuyData
-{
-    NSLog(@"to-buy");
-    
-    NSEntityDescription * entity = [NSEntityDescription
-                                   entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManger]managedObjectContext]];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:entity];
-    
-    NSError * error;
-    NSArray * allObjects = [[[JTObjectManager sharedManger]managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-    self.toBuyItems = [[NSMutableArray alloc]init];
-    for (JTObject * obj in allObjects)
-    {
-        if (obj.toBuy == YES)
-            [self.toBuyItems addObject:obj];
-    }
 }
 
 #pragma mark - Table view data source

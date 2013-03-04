@@ -17,4 +17,6 @@
 
     #import "PSTCollectionView.h"
 
+    #import "JTObjectManager.h"
+
 #endif

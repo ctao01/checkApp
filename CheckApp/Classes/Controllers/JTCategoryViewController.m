@@ -7,9 +7,6 @@
 //
 
 #import "JTCategoryViewController.h"
-#import "JTObjectManager.h"
-#import "JTCategory.h"
-#import "JTObject.h"
 #import "JTCategoryItemCell.h"
 
 #import "JTItemsViewController.h"
@@ -31,16 +28,17 @@ static float rgbcolor(value)
 @interface JTCategoryViewController ()
 {
     PSUICollectionView * _gridView;
-    
-    ADBannerView * adView;
 }
 @property (nonatomic , retain) NSString * itemName;
 @property (nonatomic , retain) NSString * itemImagePath;
 @property (nonatomic , retain) JTMainTabBarController * tbc;
+
+//@property (nonatomic , retain) UIPageControl * pageControl;
 @end
 
 @implementation JTCategoryViewController
 @synthesize categories;
+//@synthesize pageControl;
 
 - (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath
 {
@@ -69,13 +67,31 @@ static float rgbcolor(value)
 	[self generateData];
     [self createGridView];
     
-    adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-//    adView.requiredContentSizeIdentifiers = [NSSet setWithObject:ADBannerContentSizeIdentifierLandscape];
-//    adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
-    [self.view addSubview:adView];
-    adView.delegate = self;
-    adView.frame = CGRectOffset(adView.frame, 0, self.view.frame.size.height - 44 - 49 - 50.0f ); //TODO:define
+    if ([self.navigationItem.title isEqualToString:@"Category"])
+    {
+        ADBannerView * adView  = [[ADBannerView alloc] initWithFrame:CGRectZero];
+        adView.tag = 5000;
+        [self.view addSubview:adView];
+        adView.delegate = self;
+        adView.frame = CGRectOffset(adView.frame, 0, self.view.frame.size.height - 44 - 49 - 50.0f ); //TODO:define
+    }
+    else
+    {
+        UIView * view = [self.view viewWithTag:5000];
+        if (view) [view removeFromSuperview];
+    }
+    
     self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(215) green:rgbcolor(211) blue:rgbcolor(202) alpha:1.0f];
+        
+    
+    
+//    self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 30.0f)];
+//    self.pageControl.frame = CGRectOffset(self.pageControl.frame, 0.0f, adView.frame.origin.y - self.pageControl.frame.size.height/2);
+//    [self.pageControl addTarget:self action:@selector(pageControlChanged:) forControlEvents:UIControlEventValueChanged];
+//    self.pageControl.numberOfPages = ceil([[NSNumber numberWithDouble:[self.categories count]/9.0f]doubleValue]);
+////    NSLog(@"%f",ceil([[NSNumber numberWithDouble:[self.categories count]/9.0f]doubleValue]));
+//    self.pageControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+//    [self.view addSubview:self.pageControl];
 }
 
 - (void)didReceiveMemoryWarning
@@ -139,20 +155,23 @@ static float rgbcolor(value)
 
 - (void)createGridView {
     PSUICollectionViewFlowLayout *layout = [[PSUICollectionViewFlowLayout alloc] init];
-    
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [layout setMinimumInteritemSpacing:Minimum_Interitem_Spacing];
     [layout setMinimumLineSpacing:Minimum_Line_Spacing];
     
-    CGRect rect = UIEdgeInsetsInsetRect([self.view bounds], UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f));
+    CGRect rect = UIEdgeInsetsInsetRect([self.view bounds], UIEdgeInsetsMake(0.0f, 0.0f, 50.0f, 0.0f));
     _gridView = [[PSUICollectionView alloc] initWithFrame:rect collectionViewLayout:layout];
     _gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _gridView.delegate = self;
     _gridView.dataSource = self;
     _gridView.backgroundColor  = [UIColor clearColor];
+    _gridView.showsHorizontalScrollIndicator = YES;
+    _gridView.pagingEnabled = NO;
 
     [_gridView registerClass:[JTCategoryItemCell class] forCellWithReuseIdentifier:CollectionViewCellIdentifier];
     
     [self.view addSubview:_gridView];
+
 }
 
 - (void)toggleAllowsMultipleSelection:(UIBarButtonItem *)item {
@@ -189,8 +208,9 @@ static float rgbcolor(value)
 
 - (UIEdgeInsets)collectionView:(PSUICollectionView *)collectionView layout:(PSUICollectionView*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    float size, interItemSpace,topInset;
-    
+    float size, interItemSpace,topInset,bottomInset;
+    bottomInset = 30.0f;
+
     if ([UIScreen mainScreen].bounds.size.height == 568.0)
     {
         size = 100.0f;
@@ -206,12 +226,18 @@ static float rgbcolor(value)
     
     return UIEdgeInsetsMake(topInset,
                             (self.view.bounds.size.width - size*3 - interItemSpace * 2)/2,
-                            0.0f,
+                            bottomInset,
                             (self.view.bounds.size.width - size*3-  interItemSpace * 2)/2);
 }
 
+//- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+//{
+////    return roundf([self.categories count] / 9);
+//}
+
 - (NSInteger)collectionView:(PSUICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     return [self.categories count];
+//    return roundf([self.categories count] / 9);
 }
 
 #pragma mark -
@@ -232,11 +258,12 @@ static float rgbcolor(value)
 //    if (self.itemImagePath || self.itemName)
     if ([self.navigationItem.title isEqualToString:@"Select A Category"])
     {
-        JTObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
-                                                          inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
+//        JTObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
+//                                                          inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
 //        NSLog(@"%@",[categories objectAtIndex:indexPath.row]);
 //        [object setCategory:[categories objectAtIndex:indexPath.item]];
         [self.tbc.object setCategory:[categories objectAtIndex:indexPath.item]];
+        NSLog(@"Select A Category%@",[categories objectAtIndex:indexPath.item]);
         [self dismissViewControllerAnimated:YES completion:^{
 //            [self.tbc.modalView.catBtn setTitle:[[categories objectAtIndex:indexPath.item] title] forState:UIControlStateNormal];
 //            [self.tbc.modalView setNeedsDisplay];
@@ -271,7 +298,7 @@ static float rgbcolor(value)
         
         JTItemsViewController * vc = [[JTItemsViewController alloc]initWithStyle:UITableViewStylePlain];
         
-        JTCategory * category = [categories objectAtIndex:indexPath.row];
+        JTCategory * category = [categories objectAtIndex:indexPath.item];
         NSEntityDescription *entity = [NSEntityDescription
                                        entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManger]managedObjectContext]];
         
@@ -280,13 +307,15 @@ static float rgbcolor(value)
         
         NSError * error;
         NSArray * allObjects = [[[JTObjectManager sharedManger]managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+        NSLog(@"%i",[allObjects count]);
         vc.items = [[NSMutableArray alloc]init];
         for (JTObject * obj in allObjects)
         {
             if (obj.category == category)
                 [vc.items addObject:obj];
         }
-        
+        NSLog(@"%i",[vc.items count]);
+
         [self.navigationController pushViewController:vc animated:YES];
         vc.navigationItem.title = category.title;
     }
@@ -318,6 +347,27 @@ static float rgbcolor(value)
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return YES;
 }
+
+//#pragma mark - 
+//
+//- (void)pageControlChanged:(UIPageControl*)sender
+//{
+//    NSLog(@"pageControlChanged");
+//
+//    UIPageControl * control = sender;
+//    CGFloat pageWidth = _gridView.frame.size.width;
+//    
+//    CGPoint scrollTo = CGPointMake(pageWidth * control.currentPage, 0);
+//    [_gridView setContentOffset:scrollTo animated:YES];
+////    [_gridView scr]
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+//{
+//    CGFloat pageWidth = _gridView.frame.size.width;
+//    pageControl.currentPage = ceil([[NSNumber numberWithDouble:_gridView.contentOffset.x / pageWidth]doubleValue]);;
+//    [self.pageControl respondsToSelector:@selector(pageControlChanged:)];
+//}
 
 #pragma mark - UIAlertView Delegate
 

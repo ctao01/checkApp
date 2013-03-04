@@ -7,7 +7,8 @@
 //
 
 #import "JTItemsViewController.h"
-#import "JTObject.h"
+#import "JTItemsCell.h"
+#import "NSString+JTAdditions.h"
 
 @interface JTItemsViewController ()
 @end
@@ -26,12 +27,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,6 +34,69 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark -
+
+- (void)buttonTapped:(id)sender event:(UIEvent *)event
+{
+    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint:[[[event touchesForView:sender] anyObject] locationInView:self.tableView]];
+    JTObject * object = [items objectAtIndex:indexPath.row];
+    UIButton * button = (UIButton*)sender;
+    
+    switch (button.tag) {
+        case 1001:
+        {
+            if (button.selected)
+            {
+                button.selected = NO;
+                [button setBackgroundImage:[UIImage imageNamed:@"btn_expired"] forState:UIControlStateNormal];
+                object.expiredDate = nil;
+                object.expired = NO;
+            }
+            else
+            {
+                button.selected = YES;
+                [button setTitle:@"" forState:UIControlStateSelected];
+                [button setBackgroundImage:[UIImage imageNamed:@"expiredBtn_expired"] forState:UIControlStateSelected];
+                object.expiredDate = [NSDate date];
+                object.expired = YES;
+            }
+        }
+            break;
+        case 1002:
+        {
+            
+            if (button.selected)
+            {
+                [object setToBuyDate:nil];
+                [object setToBuy:NO];
+                button.selected = NO;
+                [button setBackgroundImage:[UIImage imageNamed:@"toBuyBtn"] forState:UIControlStateNormal];
+                
+            }
+            else
+            {
+                [object setToBuyDate:[NSDate date]];
+                [object setToBuy:YES];
+                button.selected = YES;
+                [button setBackgroundImage:[UIImage imageNamed:@"toBuyBtn_disable"] forState:UIControlStateSelected];
+            }
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    [object setUpdatedDate:[NSDate date]];
+    
+    NSError *error;
+    if (![[[JTObjectManager sharedManger]managedObjectContext] save:&error])
+    {
+        NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -56,58 +114,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JTObject * object = [self.items objectAtIndex:indexPath.row];
+    JTObject * object = [items objectAtIndex:indexPath.row];
     
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    cell.textLabel.text = object.name;
+    JTItemsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) cell = [[JTItemsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell.tableViewController = self;
+    cell.object = object;
+    cell.titleLabel.text = object.name;
+    cell.dateLabel.text = [NSString stringWithFormat:@"Lastest Update:%@",[NSString dateFormatterShortStyle:object.updatedDate]];
+    cell.imageView.image = object.imagePath ? [UIImage imageWithData:[NSData dataWithContentsOfFile:object.imagePath]]:[UIImage imageNamed:@"btn_placeholder_temp"];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     // Configure the cell...
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
+- (float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 90.0f;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
