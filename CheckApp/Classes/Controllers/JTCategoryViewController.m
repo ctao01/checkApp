@@ -121,7 +121,7 @@ static float rgbcolor(value)
                                 [NSNumber numberWithInt:365],
                                 [NSNumber numberWithInt:365],
                                 [NSNumber numberWithInt:365],
-                                [NSNumber numberWithInt:365*10],nil];
+                                [NSNumber numberWithInt:365],nil];
         
         for (int i = 0; i < [array count]; i++)
         {

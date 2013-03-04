@@ -34,9 +34,13 @@
 
     if (button1)
     {
-        [button1 setTitle:[NSString stringWithFormat:@"%i days",[components day]] forState:UIControlStateNormal];
+        NSLog(@"%i",[components day]);
+        int days = [components day];
+        if (days >= 365) [button1 setTitle:[NSString stringWithFormat:@"%@ yrs",[NSNumber numberWithDouble:floor([components day]/365)]] forState:UIControlStateNormal];
+        else if (days < 365 && days >= 30) [button1 setTitle:[NSString stringWithFormat:@"%@ mos",[NSNumber numberWithDouble:floor([components day]/30)]] forState:UIControlStateNormal];
+        else [button1 setTitle:[NSString stringWithFormat:@"%i days",[components day]] forState:UIControlStateNormal];
+
     }
-    //    button1.titleLabel.text = [NSString stringWithFormat:@"%f days",diff/86400];
     if (button2)
     {
         if (_object.toBuy == NO) button2.selected = NO;
@@ -102,9 +106,11 @@
         
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(64.0f, self.imageView.frame.origin.y, 200.0f, 32.0f)];
         _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:20];
+
         _dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(_titleLabel.frame.origin.x, 32.0f, 200.0f, 24.0f)];
         _dateLabel.backgroundColor = [UIColor clearColor];
-        _dateLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:12];
+        _dateLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:14];
 
         [self addSubview:_titleLabel];
         [self addSubview:_dateLabel];

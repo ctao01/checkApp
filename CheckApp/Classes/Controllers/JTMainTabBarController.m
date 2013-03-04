@@ -122,7 +122,7 @@
         else
         {
             NSLog(@"object:%@",self.object);
-            NSLog(@"object.category.title%@",self.object.category.title);
+            NSLog(@"object.category.title%@",self.object.category.period);
             
         }
         UIView * view = [self.view viewWithTag:1020];
