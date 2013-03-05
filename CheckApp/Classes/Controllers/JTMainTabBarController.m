@@ -11,6 +11,8 @@
 #import "JTBuyListViewController.h"
 #import "NSString+JTAdditions.h"
 #import "UIImage+JTAdditions.h"
+
+
 @interface JTMainTabBarController ()
 {
     UIImage * originImage;
@@ -90,8 +92,16 @@
 
 - (void) cancelCreating
 {
-    UIView * view = [self.view viewWithTag:1020];
-    if (view) [view removeFromSuperview];
+    [UIView animateWithDuration:0.4f
+                          delay:0.0f
+                        options: UIViewAnimationCurveEaseIn
+                     animations:^{
+                         [self.modalView setFrame:CGRectMake(self.modalView.frame.origin.x, self.modalView.frame.origin.y - self.modalView.frame.size.height, self.modalView.frame.size.width, self.modalView.frame.size.height)];
+                     }
+                     completion:^(BOOL finished){
+                         UIView * view = [self.view viewWithTag:1020];
+                         if (view) [view removeFromSuperview];
+                     }];
     self.object = nil;
 }
 
@@ -115,7 +125,7 @@
 //        [self.object setImagePath:nil];
         
         NSError *error;
-        if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
+        if (![[[JTObjectManager sharedManager] managedObjectContext] save:&error])
         {
             NSLog(@"Failed to save, error: %@", [error localizedDescription]);
         }
@@ -125,8 +135,16 @@
             NSLog(@"object.category.title%@",self.object.category.period);
             
         }
-        UIView * view = [self.view viewWithTag:1020];
-        if (view) [view removeFromSuperview];
+        [UIView animateWithDuration:0.4f
+                              delay:0.0f
+                            options: UIViewAnimationCurveEaseIn
+                         animations:^{
+                             [self.modalView setFrame:CGRectMake(self.modalView.frame.origin.x, self.modalView.frame.origin.y - self.modalView.frame.size.height, self.modalView.frame.size.width, self.modalView.frame.size.height)];
+                         }
+                         completion:^(BOOL finished){
+                             UIView * view = [self.view viewWithTag:1020];
+                             if (view) [view removeFromSuperview];
+                         }];
     }
 }
 
@@ -157,15 +175,39 @@
 - (void) addNewItem
 {
     self.object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
-                                                inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
+                                                inManagedObjectContext:[[JTObjectManager sharedManager] managedObjectContext]];
     
     [self.object setImagePath:nil];
+    
+    UIView * overlayView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
+    overlayView.opaque = NO;
+    overlayView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.75f];
+    overlayView.tag = 1020;
+    
     self.modalView = [[JTModalView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    [self.modalView setFrame:CGRectMake(self.modalView.frame.origin.x, self.modalView.frame.origin.y - self.modalView.frame.size.height, self.modalView.frame.size.width, self.modalView.frame.size.height)];
+    self.modalView.opaque = NO;
+    self.modalView.backgroundColor = [UIColor clearColor];
+    self.modalView.viewController = self;
+    [overlayView addSubview:self.modalView];
+    [self.view addSubview:overlayView];
+    
+    [UIView animateWithDuration:0.8f
+                          delay:0.0f
+                        options: UIViewAnimationCurveEaseOut
+                     animations:^{
+                         self.modalView.frame = [[UIScreen mainScreen]bounds];
+                     }
+                     completion:^(BOOL finished){
+                         NSLog(@"Done!");
+                     }];
+    
+    /*self.modalView = [[JTModalView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.modalView.opaque = NO;
     self.modalView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.75f];
     self.modalView.viewController = self;
     self.modalView.tag = 1020;
-    [self.view addSubview:self.modalView];
+    [self.view addSubview:self.modalView];*/
 }
 
 
@@ -212,7 +254,7 @@
     
     self.selectedIndex = currentIndex;
 //    self.object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
-//                                                inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
+//                                                inManagedObjectContext:[[JTObjectManager sharedManager] managedObjectContext]];
     
     [self dismissViewControllerAnimated:YES completion:^{
         
@@ -244,31 +286,32 @@
 {
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
-/*
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex)
     {
-        NSString * imagePath = [NSString imagePathWithItemName:[alertView textFieldAtIndex:0].text];
-        NSData * pngData = UIImagePNGRepresentation(originImage);
-        [pngData writeToFile:imagePath atomically:YES];
-        NSLog(@"%@",imagePath);
         
-        JTCategoryViewController * vc = [[JTCategoryViewController alloc]initWithNewItemName:[alertView textFieldAtIndex:0].text iconImagePath:imagePath];
-        [self dismissViewControllerAnimated:YES completion:^{
-            UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:vc];
-            [[self.viewControllers objectAtIndex:2] presentViewController:nc animated:YES completion:^{
-                [self setSelectedIndex:currentIndex];
-            }];
-            originImage = nil;
-            NSLog(@"completion");
-         }];
-
-//        UINavigationController * nc = (UINavigationController*)[self.viewControllers objectAtIndex:2];
-//        [nc pushViewController:vc animated:YES];
+//        NSString * imagePath = [NSString imagePathWithItemName:[alertView textFieldAtIndex:0].text];
+//        NSData * pngData = UIImagePNGRepresentation(originImage);
+//        [pngData writeToFile:imagePath atomically:YES];
+//        NSLog(@"%@",imagePath);
+//        
+//        JTCategoryViewController * vc = [[JTCategoryViewController alloc]initWithNewItemName:[alertView textFieldAtIndex:0].text iconImagePath:imagePath];
+//        [self dismissViewControllerAnimated:YES completion:^{
+//            UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:vc];
+//            [[self.viewControllers objectAtIndex:2] presentViewController:nc animated:YES completion:^{
+//                [self setSelectedIndex:currentIndex];
+//            }];
+//            originImage = nil;
+//            NSLog(@"completion");
+//         }];
+//
+////        UINavigationController * nc = (UINavigationController*)[self.viewControllers objectAtIndex:2];
+////        [nc pushViewController:vc animated:YES];
     }
 }
-*/
+
 @end

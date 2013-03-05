@@ -26,6 +26,7 @@
     [_object release];
     _object = [object retain];
     
+    NSLog(@"%@",object);
 //    NSTimeInterval diff = [_object.expiredDate timeIntervalSinceDate:[NSDate date]];
     NSDateComponents *components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
                                                                    fromDate:[NSDate date] toDate: _object.expiredDate options: 0];
@@ -34,11 +35,18 @@
 
     if (button1)
     {
-        NSLog(@"%i",[components day]);
-        int days = [components day];
-        if (days >= 365) [button1 setTitle:[NSString stringWithFormat:@"%@ yrs",[NSNumber numberWithDouble:floor([components day]/365)]] forState:UIControlStateNormal];
-        else if (days < 365 && days >= 30) [button1 setTitle:[NSString stringWithFormat:@"%@ mos",[NSNumber numberWithDouble:floor([components day]/30)]] forState:UIControlStateNormal];
-        else [button1 setTitle:[NSString stringWithFormat:@"%i days",[components day]] forState:UIControlStateNormal];
+        if (_object.expired == YES)
+        {
+            [button1 setEnabled:NO];
+            [button1 setTitle:@"" forState:UIControlStateDisabled];
+        }
+        else
+        {
+            NSInteger days = [components day];
+            if (days >= 365) [button1 setTitle:[NSString stringWithFormat:@"%@ yrs",[NSNumber numberWithDouble:floor([components day]/365)]] forState:UIControlStateNormal];
+            else if (days < 365 && days >= 30) [button1 setTitle:[NSString stringWithFormat:@"%@ mos",[NSNumber numberWithDouble:floor([components day]/30)]] forState:UIControlStateNormal];
+            else [button1 setTitle:[NSString stringWithFormat:@"%i days",[components day]] forState:UIControlStateNormal];
+        }
 
     }
     if (button2)
@@ -53,23 +61,27 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         JTItemsViewController * vc = (JTItemsViewController*)self.tableViewController;
+                
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(64.0f, self.imageView.frame.origin.y + 8, 200.0f, 32.0f)];
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:20];
+
+        _dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(_titleLabel.frame.origin.x, 32.0f, 200.0f, 18.0f)];
+        _dateLabel.backgroundColor = [UIColor clearColor];
+        _dateLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:12];
+
+        [self addSubview:_titleLabel];
+        [self addSubview:_dateLabel];
         
         // Expire Date
         
         UIButton * button1 = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage * btn1Image;
-        if (self.object.expired == NO)
-        {
-            btn1Image = [UIImage imageNamed:@"btn_expired"];
-            [button1 setBackgroundImage:btn1Image forState:UIControlStateNormal];
-        }
-        else
-        {
-            btn1Image = [UIImage imageNamed:@"expiredBtn_expired"];
-            [button1 setBackgroundImage:btn1Image forState:UIControlStateSelected];
-        }
-        [button1 setFrame:CGRectMake(10.0f, 65.0f, btn1Image.size.width, btn1Image.size.height)];
-        
+        UIImage * btn1Image = [UIImage imageNamed:@"btn_expired"];
+        [button1 setFrame:CGRectMake(0.0f, 0.0f, btn1Image.size.width, btn1Image.size.height)];
+
+//        [button1 setFrame:CGRectMake(rect.origin.x, self.imageView.frame.origin.y + 44.0f, btn1Image.size.width, btn1Image.size.height)];
+        [button1 setBackgroundImage:btn1Image forState:UIControlStateNormal];
+        [button1 setBackgroundImage:[UIImage imageNamed:@"expiredBtn_expired"] forState:UIControlStateDisabled];
         [button1 setTitleEdgeInsets:UIEdgeInsetsMake(5.0f, 24.0f, 5.0, 5.0)];
         button1.titleLabel.font = [UIFont systemFontOfSize:12];
         
@@ -79,10 +91,10 @@
         // To-Buy List
         
         UIButton * button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage * btn2Image;
-        
-        btn2Image = [UIImage imageNamed:@"toBuyBtn"];
-        [button2 setFrame:CGRectMake(button1.frame.origin.x + button1.frame.size.width + 18, button1.frame.origin.y , btn2Image.size.width, btn2Image.size.height)];
+        UIImage * btn2Image = [UIImage imageNamed:@"toBuyBtn"];
+//        [button2 setFrame:CGRectMake(button1.frame.origin.x + button1.frame.size.width + 18, button1.frame.origin.y , btn2Image.size.width, btn2Image.size.height)];
+        [button2 setFrame:CGRectMake(0.0f, 0.0f, btn2Image.size.width, btn2Image.size.height)];
+
         [button2 setBackgroundImage:btn2Image forState:UIControlStateNormal];
         [button2 setBackgroundImage:[UIImage imageNamed:@"toBuyBtn_disable"] forState:UIControlStateSelected];
         button2.tag = 1002;
@@ -93,7 +105,8 @@
         
         UIButton * button3 = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage * btn3Image = [UIImage imageNamed:@"deleteBtn"];
-        [button3 setFrame:CGRectMake(button2.frame.origin.x + button2.frame.size.width + 18, button2.frame.origin.y , btn3Image.size.width, btn3Image.size.height)];
+        [button3 setFrame:CGRectMake(0.0f, 0.0f , btn3Image.size.width, btn3Image.size.height)];
+//        [button3 setFrame:CGRectMake(button2.frame.origin.x + button2.frame.size.width + 18, button2.frame.origin.y , btn3Image.size.width, btn3Image.size.height)];
         [button3 setBackgroundImage:btn3Image forState:UIControlStateNormal];
         button3.tag = 1003;
         [button3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -102,19 +115,7 @@
         
         [self addSubview:button1];
         [self addSubview:button2];
-        [self addSubview:button3];
-        
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(64.0f, self.imageView.frame.origin.y, 200.0f, 32.0f)];
-        _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:20];
-
-        _dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(_titleLabel.frame.origin.x, 32.0f, 200.0f, 24.0f)];
-        _dateLabel.backgroundColor = [UIColor clearColor];
-        _dateLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:14];
-
-        [self addSubview:_titleLabel];
-        [self addSubview:_dateLabel];
-        
+//        [self addSubview:button3];
     }
     return self;
 }
@@ -134,19 +135,28 @@
     self.imageView.layer.masksToBounds = NO;
     self.imageView.layer.shadowPath = [self renderPaperCurl:self.imageView];
     
+    UIButton * button1 = (UIButton*)[self viewWithTag:1001];
+    UIButton * button2 = (UIButton*)[self viewWithTag:1002];
+    UIButton * button3 = (UIButton*)[self viewWithTag:1003];
+
+    
+    [button1 setFrame:CGRectMake(self.dateLabel.frame.origin.x, self.imageView.frame.origin.x + self.imageView.frame.size.height, button1.frame.size.width, button1.frame.size.height)];
+    [button2 setFrame:CGRectMake(button1.frame.origin.x + button1.frame.size.width + 18, button1.frame.origin.y, button2.frame.size.width, button2.frame.size.height)];
+    [button3 setFrame:CGRectMake(button2.frame.origin.x + button2.frame.size.width + 18, button1.frame.origin.y, button3.frame.size.width, button3.frame.size.height)];
+
 }
 
 - (void) drawRect:(CGRect)rect
 {
-    UIBezierPath * path = [UIBezierPath bezierPath];
-    CGPoint startOfLine = CGPointMake(10.0f, 60.0f);
-    CGPoint endOfLine = CGPointMake(rect.origin.x + rect.size.width - 20.0f, 60.0f);
-    
-    [path moveToPoint:startOfLine];
-    [path addLineToPoint:endOfLine];
-    
-    [[UIColor redColor] setStroke];
-    [path stroke];
+//    UIBezierPath * path = [UIBezierPath bezierPath];
+//    CGPoint startOfLine = CGPointMake(10.0f, 60.0f);
+//    CGPoint endOfLine = CGPointMake(rect.origin.x + rect.size.width - 20.0f, 60.0f);
+//    
+//    [path moveToPoint:startOfLine];
+//    [path addLineToPoint:endOfLine];
+//    
+//    [[UIColor redColor] setStroke];
+//    [path stroke];
     
 }
 
