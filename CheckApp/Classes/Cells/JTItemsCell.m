@@ -70,8 +70,8 @@
         _dateLabel.backgroundColor = [UIColor clearColor];
         _dateLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:12];
 
-        [self addSubview:_titleLabel];
-        [self addSubview:_dateLabel];
+        [self.contentView addSubview:_titleLabel];
+        [self.contentView addSubview:_dateLabel];
         
         // Expire Date
         
@@ -113,9 +113,10 @@
         [button3 addTarget:vc action:@selector(buttonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
         
         
-        [self addSubview:button1];
-        [self addSubview:button2];
-//        [self addSubview:button3];
+        [self.contentView addSubview:button1];
+        [self.contentView addSubview:button2];
+        [self addSubview:button3];
+        self.contentMode = UIViewContentModeScaleAspectFit;
     }
     return self;
 }
@@ -143,7 +144,6 @@
     [button1 setFrame:CGRectMake(self.dateLabel.frame.origin.x, self.imageView.frame.origin.x + self.imageView.frame.size.height, button1.frame.size.width, button1.frame.size.height)];
     [button2 setFrame:CGRectMake(button1.frame.origin.x + button1.frame.size.width + 18, button1.frame.origin.y, button2.frame.size.width, button2.frame.size.height)];
     [button3 setFrame:CGRectMake(button2.frame.origin.x + button2.frame.size.width + 18, button1.frame.origin.y, button3.frame.size.width, button3.frame.size.height)];
-
 }
 
 - (void) drawRect:(CGRect)rect

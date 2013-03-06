@@ -11,6 +11,8 @@
 
 #import "JTItemsViewController.h"
 #import "JTMainTabBarController.h"
+#import "JTDetailViewController.h"
+#import "JTHeaderView.h"
 
 #define Minimum_Interitem_Spacing 3.0f
 #define Minimum_Line_Spacing 5.0f
@@ -31,13 +33,14 @@ static float rgbcolor(value)
 }
 @property (nonatomic , retain) NSString * itemName;
 @property (nonatomic , retain) NSString * itemImagePath;
-@property (nonatomic , retain) JTMainTabBarController * tbc;
+@property (nonatomic , retain) UIViewController * tbc;
 
 //@property (nonatomic , retain) UIPageControl * pageControl;
 @end
 
 @implementation JTCategoryViewController
 @synthesize categories;
+//@synthesize object = _object;
 //@synthesize pageControl;
 
 - (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath
@@ -55,9 +58,18 @@ static float rgbcolor(value)
 {
     self = [super init];
     if (self)
-        self.tbc = (JTMainTabBarController*)vc;
+        self.tbc = vc;
     return self;
 }
+
+//- (id) initWithCurrentObject:(JTObject*)object
+//{
+//    self = [super init];
+//    if (self)
+//        _object = object;
+//    return self;
+//}
+
 
 - (void)viewDidLoad
 {
@@ -102,7 +114,7 @@ static float rgbcolor(value)
 
 - (void) generateData
 {
-    JTObjectManager * manager = [JTObjectManager sharedManger];
+    JTObjectManager * manager = [JTObjectManager sharedManager];
     NSManagedObjectContext * context = [manager managedObjectContext];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
@@ -112,6 +124,7 @@ static float rgbcolor(value)
     }
     else
     {
+        
         NSArray * array = [NSArray arrayWithObjects:@"Frozen",@"Fresh",@"Dairy",@"Beverage",@"Crackers",@"Pharmacy",@"Canned", @"Sauces",@"Other", nil];
         NSArray * tempPeriod = [NSArray arrayWithObjects:[NSNumber numberWithInt:7],
                                 [NSNumber numberWithInt:10],
@@ -255,67 +268,33 @@ static float rgbcolor(value)
 
 - (void)collectionView:(PSTCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (self.itemImagePath || self.itemName)
     if ([self.navigationItem.title isEqualToString:@"Select A Category"])
     {
-//        JTObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"JTObject"
-//                                                          inManagedObjectContext:[[JTObjectManager sharedManger] managedObjectContext]];
-//        NSLog(@"%@",[categories objectAtIndex:indexPath.row]);
-//        [object setCategory:[categories objectAtIndex:indexPath.item]];
-        [self.tbc.object setCategory:[categories objectAtIndex:indexPath.item]];
-        NSLog(@"Select A Category%@",[categories objectAtIndex:indexPath.item]);
         [self dismissViewControllerAnimated:YES completion:^{
-//            [self.tbc.modalView.catBtn setTitle:[[categories objectAtIndex:indexPath.item] title] forState:UIControlStateNormal];
-//            [self.tbc.modalView setNeedsDisplay];
-            [self.tbc.modalView setCategory:[[categories objectAtIndex:indexPath.item] title]];
+            NSLog(@"%@",NSStringFromClass([self.tbc class]));
+            if ([self.tbc class] == [JTMainTabBarController class])
+            {
+                JTMainTabBarController * vc = (JTMainTabBarController*)self.tbc;
+                [vc.modalView setCategory:[[categories objectAtIndex:indexPath.item] title]];
+                [vc.object setCategory:[categories objectAtIndex:indexPath.item]];
+            }
+            else if ([self.tbc class] == [JTDetailViewController class])
+            {
+                JTDetailViewController * vc = (JTDetailViewController*)self.tbc;
+                [vc.object setCategory:[categories objectAtIndex:indexPath.item]];
+                JTHeaderView * view = (JTHeaderView*)[vc.view viewWithTag:4000];
+                [view setCategory:[[categories objectAtIndex:indexPath.item] title]];
+                
+            }
         }];
-//        [object setName:self.itemName];
-//        [object setBuyInDate:[NSDate date]];
-//
-//        int days = [[[categories objectAtIndex:indexPath.row] period]intValue];
-//        [object setExpiredDate:[[NSDate date]dateByAddingTimeInterval: 60 * 60 * 24 * days]];
-//        [object setToBuy:NO];
-//        [object setToBuyDate:nil];
-//        [object setImagePath:self.itemImagePath];
-//        
-//        NSError *error;
-//        if (![[[JTObjectManager sharedManger] managedObjectContext] save:&error])
-//        {
-//            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
-//        }
-//        else
-//        {
-////            [self.tabBarController setSelectedIndex:0];
-////            [self dismissViewControllerAnimated:YES completion:^{}];
-//            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Done" message:@"The item has been saved" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
-//            [alertView show];
-//            
-//        }
         
     }
     else
     {
         
-        JTItemsViewController * vc = [[JTItemsViewController alloc]initWithStyle:UITableViewStylePlain];
+        JTItemsViewController * vc = [[JTItemsViewController alloc]initWithStyle:UITableViewStyleGrouped];
         
         JTCategory * category = [categories objectAtIndex:indexPath.item];
-        NSEntityDescription *entity = [NSEntityDescription
-                                       entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManger]managedObjectContext]];
-        
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        [fetchRequest setEntity:entity];
-        
-        NSError * error;
-        NSArray * allObjects = [[[JTObjectManager sharedManger]managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-        NSLog(@"%i",[allObjects count]);
-        vc.items = [[NSMutableArray alloc]init];
-        for (JTObject * obj in allObjects)
-        {
-            if (obj.category == category)
-                [vc.items addObject:obj];
-        }
-        NSLog(@"%i",[vc.items count]);
-
         [self.navigationController pushViewController:vc animated:YES];
         vc.navigationItem.title = category.title;
     }

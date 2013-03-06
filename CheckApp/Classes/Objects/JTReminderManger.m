@@ -8,6 +8,39 @@
 
 #import "JTReminderManger.h"
 
+static JTReminderManger * sharedManager = nil;
+
 @implementation JTReminderManger
+@synthesize store = _store;
+
++ (JTReminderManger*) sharedManager
+{
+    @synchronized(self){
+        if (sharedManager == nil)
+            sharedManager = [[super allocWithZone:NULL] init];
+    }
+    return sharedManager;
+}
+
++(id) allocWithZone:(NSZone *)zone
+{
+    return [self sharedManager];
+}
+
+- (EKEventStore*) store
+{
+    if (_store == nil)
+    {
+        _store = [[EKEventStore alloc]init];
+        
+        [_store requestAccessToEntityType:EKEntityTypeReminder completion:^(BOOL granted, NSError *error) {
+            
+            if (!granted)
+                NSLog(@"Access to store not granted");
+        }];
+    }
+    
+    return _store;
+}
 
 @end

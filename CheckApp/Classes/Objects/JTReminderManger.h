@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <EventKit/EventKit.h>
 
 @interface JTReminderManger : NSObject
+
+@property (nonatomic , retain) EKEventStore * store;
+
++ (JTReminderManger*) sharedManager;
 
 @end

@@ -7,9 +7,15 @@
 //
 
 #import "JTBuyListViewController.h"
+#import "JTDetailViewController.h"
 
 @interface JTBuyListViewController ()
+{
+    NSArray * keys; 
+}
 @property (nonatomic , retain) NSMutableArray * toBuyItems;
+- (void) generateToBuyData;
+
 @end
 
 @implementation JTBuyListViewController
@@ -27,14 +33,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    keys = [NSArray arrayWithObjects:@"Recently",@"Days Ago",@"Week Ago",@"Month Ago",@"Earlier", nil];
+    UIBarButtonItem * editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editTable:)];
+    self.navigationItem.leftBarButtonItem = editButton;
+    self.editing = NO;
+    
+    UIBarButtonItem * addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToBuyItem)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    
+    self.navigationItem.title = @"To-Buy List";
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self generateToBuyData];
+}
 #pragma mark - Pre-Load Data
 
 - (void) generateToBuyData
@@ -42,19 +62,91 @@
     NSLog(@"to-buy");
     
     NSEntityDescription * entity = [NSEntityDescription
-                                   entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManger]managedObjectContext]];
+                                   entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManager]managedObjectContext]];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:entity];
     
     NSError * error;
-    NSArray * allObjects = [[[JTObjectManager sharedManger]managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    NSArray * allObjects = [[[JTObjectManager sharedManager]managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    
+//    self.toBuyItems = [[NSMutableDictionary alloc]initWithObjectsAndKeys:array,@"Recently",array,@"Days Ago",array,@"Week Ago",array,@"Month Ago",array,@"Earlier", nil];
     self.toBuyItems = [[NSMutableArray alloc]init];
     for (JTObject * obj in allObjects)
     {
+        NSLog(@"%@",allObjects);
         if (obj.toBuy == YES)
+        {
             [self.toBuyItems addObject:obj];
+//            NSDateComponents * components = [[NSCalendar currentCalendar] components: NSSecondCalendarUnit
+//                                                                           fromDate:obj.toBuyDate toDate:[NSDate date] options: 0];
+//            NSInteger seconds = [components second];
+//            if (seconds > 0 && seconds <= seconds * 60 * 24)
+//                [self.toBuyItems setObject:[[self.toBuyItems objectForKey:@"Recently"] arrayByAddingObject:obj] forKey:@"Recently"];
+//            else if (seconds > seconds * 60 * 24 && seconds <= seconds * 60 * 24 * 7)
+//                [self.toBuyItems setObject:[[self.toBuyItems objectForKey:@"Days Ago"] arrayByAddingObject:obj] forKey:@"Days Ago"];
+//            else if (seconds > seconds * 60 * 24 * 7 && seconds <= seconds * 60 * 60 * 24 * 30)
+//                [self.toBuyItems setObject:[[self.toBuyItems objectForKey:@"Week Ago"] arrayByAddingObject:obj] forKey:@"Week Ago"];
+//            else if (seconds > seconds * 60 * 24 * 30 && seconds <= seconds * 60 * 60 * 24 * 90)
+//                [self.toBuyItems setObject:[[self.toBuyItems objectForKey:@"Month Ago"] arrayByAddingObject:obj] forKey:@"Month Ago"];
+//            else
+//                [self.toBuyItems setObject:[[self.toBuyItems objectForKey:@"Earlier"] arrayByAddingObject:obj] forKey:@"Earlier"];
+        }
+
     }
+}
+
+#pragma mark - Editable Table Method
+
+- (void) editTable:(id)sender{
+	if(self.editing)
+	{
+		[super setEditing:NO animated:NO];
+		[self.tableView setEditing:NO animated:NO];
+		[self.tableView reloadData];
+		[self.navigationItem.leftBarButtonItem setTitle:@"Edit"];
+        [self.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStylePlain];
+        UIBarButtonItem * addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToBuyItem)];
+        self.navigationItem.rightBarButtonItem = addButton;
+        
+	}
+	else
+	{
+		[super setEditing:YES animated:YES];
+		[self.tableView setEditing:YES animated:YES];
+		[self.tableView reloadData];
+		[self.navigationItem.leftBarButtonItem setTitle:@"Done"];
+        [self.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
+
+        UIBarButtonItem * deleteButton = [[UIBarButtonItem alloc]initWithTitle:@"Delete All" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteAllItems)];
+        self.navigationItem.rightBarButtonItem = deleteButton;
+        
+	}
+}
+
+- (void) addToBuyItem
+{
+    JTDetailViewController * vc = [[JTDetailViewController alloc]initWithStyle:UITableViewStyleGrouped withObject:nil];
+    UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:vc];
+    
+    [self.navigationController presentViewController:nc animated:YES completion:^{}];
+}
+
+- (void) deleteAllItems
+{
+    for (JTObject * object in self.toBuyItems)
+    {
+        object.toBuy = NO;
+        object.toBuyDate = nil;
+        NSError *error;
+        if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
+        {
+            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+        }
+    }
+    [self.toBuyItems removeAllObjects];
+    [self.tableView reloadData];
+    
 }
 
 #pragma mark - Table view data source
@@ -62,65 +154,67 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+//    return [keys count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+//    NSArray * array = [self.toBuyItems objectForKey:[keys objectAtIndex:section]];
+//    return [array count];
+    return [self.toBuyItems count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     // Configure the cell...
+    
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.editing == NO || !indexPath) return UITableViewCellEditingStyleNone;
+    else return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        JTObject * object = [self.toBuyItems objectAtIndex:indexPath.row];
+        object.toBuy = NO;
+        object.toBuyDate = nil;
+        NSError *error;
+        if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
+        {
+            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+        }
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil]
+                   withRowAnimation:UITableViewRowAnimationFade];
+        [self.toBuyItems removeObjectAtIndex:indexPath.row];
+    }
+}
+
+
+//- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    if ([[self.toBuyItems objectForKey:[keys objectAtIndex:section]] count] > 0 ) return [keys objectAtIndex:section];
+//    else return nil;
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

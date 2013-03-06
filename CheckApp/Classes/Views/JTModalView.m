@@ -41,7 +41,7 @@
 - (void) setCategory:(NSString *)newCategory
 {
     if (_category == newCategory) return;
-    NSLog(@"newCategory");
+    NSLog(@"newCategory:%@",newCategory);
     _category = newCategory;
     [catBtn setTitle:_category forState:UIControlStateNormal];
     [catBtn layoutIfNeeded];
@@ -63,15 +63,15 @@
 {
     // Drawing code
     
-    CGRect frame = CGRectMake(0.0f, 0.0f, CONSTANT * 5, CONSTANT*4);
+    CGRect frame = CGRectMake(0.0f, 0.0f, CONSTANT * 5, 160.0f);
     frame.origin = CGPointMake((rect.size.width - frame.size.width) / 2 ,
                                (rect.size.height - frame.size.height) / 2);
     
     [self drawTheCenterRect:frame];
     
     CGRect innerFrame = UIEdgeInsetsInsetRect(frame, UIEdgeInsetsMake(20.0f, 10.0f, 20.0f, 10.0f));
-    CGRect topFrame = UIEdgeInsetsInsetRect(innerFrame, UIEdgeInsetsMake(0.0f, 0.0f, 60.0f, 0.0f));
-    CGRect lowerFrame = UIEdgeInsetsInsetRect(innerFrame, UIEdgeInsetsMake(120.0f, 0.0f, 0.0f, 0.0f));
+    CGRect topFrame = UIEdgeInsetsInsetRect(innerFrame, UIEdgeInsetsMake(0.0f, 0.0f, innerFrame.size.height * 1 / 3, 0.0f));
+    CGRect lowerFrame = UIEdgeInsetsInsetRect(innerFrame, UIEdgeInsetsMake(innerFrame.size.height * 2 / 3, 0.0f, 0.0f, 0.0f));
 
     [self drawThumbViewWithRect:CGRectMake(topFrame.origin.x, topFrame.origin.y, 80.0f, 80.0f)];
     [self attachConfirmButtonsWithRect:lowerFrame];
@@ -183,9 +183,10 @@
 
 - (void) attachConfirmButtonsWithRect:(CGRect)rect
 {
-    CGRect buttonRect = UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(5.0f, 25.0f, 5.0f, 25.0f));
+    CGRect buttonRect = UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(10.0f, 25.0f, 0.0f, 25.0f));
     UIButton * btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn1 setFrame:buttonRect];
+    [btn1 setFrame:CGRectOffset(btn1.frame, 0.0f, 5.0f)];
     
     UIImage * originalImage = [UIImage imageNamed:@"btn_modal"];
     UIEdgeInsets insets = UIEdgeInsetsMake(0.0f,

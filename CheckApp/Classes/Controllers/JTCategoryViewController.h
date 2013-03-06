@@ -12,7 +12,10 @@
 @interface JTCategoryViewController : UIViewController <PSTCollectionViewDataSource, PSTCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate , UIAlertViewDelegate , ADBannerViewDelegate>
 
 @property (nonatomic,strong) NSArray * categories;
+//@property (nonatomic , retain) JTObject * object;
+
 - (id)initWithNewItemName:(NSString*)name iconImagePath:(NSString*)imagePath;
 - (id) initFromViewController:(UIViewController*)vc;
+//- (id) initWithCurrentObject:(JTObject*)object;
 
 @end

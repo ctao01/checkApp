@@ -16,7 +16,7 @@ static JTObjectManager * sharedManager = nil;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
-+(JTObjectManager*) sharedManger
++(JTObjectManager*) sharedManager
 {
     @synchronized(self){
         if (sharedManager == nil)
@@ -27,7 +27,7 @@ static JTObjectManager * sharedManager = nil;
 
 +(id) allocWithZone:(NSZone *)zone
 {
-    return [self sharedManger];
+    return [self sharedManager];
 }
 
 - (void)saveContext

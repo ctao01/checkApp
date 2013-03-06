@@ -58,6 +58,10 @@
 		3D78FDA016E53A1400C9A28C /* btn_placeholder_temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD9E16E53A1400C9A28C /* btn_placeholder_temp.png */; };
 		3D78FDA116E53A1400C9A28C /* btn_placeholder_temp@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FD9F16E53A1400C9A28C /* btn_placeholder_temp@2x copy.png */; };
 		3D78FDAC16E54CF700C9A28C /* UIImage+JTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDAB16E54CF700C9A28C /* UIImage+JTAdditions.m */; };
+		3D78FDAE16E5681F00C9A28C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D78FDAD16E5681E00C9A28C /* EventKit.framework */; };
+		3D78FDB116E56DA700C9A28C /* JTReminderManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDB016E56DA600C9A28C /* JTReminderManger.m */; };
+		3D78FDB816E66A6600C9A28C /* JTDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDB716E66A6400C9A28C /* JTDetailViewController.m */; };
+		3D78FDBB16E6805700C9A28C /* JTHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDBA16E6805700C9A28C /* JTHeaderView.m */; };
 		3DBA6A9F16E00E40009719DF /* btn_camera_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA6A9D16E00E40009719DF /* btn_camera_black.png */; };
 		3DBA6AA016E00E40009719DF /* btn_camera_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */; };
 		3DBA6AA216E014C7009719DF /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBA6AA116E014C7009719DF /* iAd.framework */; };
@@ -155,6 +159,13 @@
 		3D78FD9F16E53A1400C9A28C /* btn_placeholder_temp@2x copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_placeholder_temp@2x copy.png"; path = "Assets/btn_placeholder_temp@2x copy.png"; sourceTree = "<group>"; };
 		3D78FDAA16E54CF700C9A28C /* UIImage+JTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+JTAdditions.h"; path = "Classes/Categories/UIImage+JTAdditions.h"; sourceTree = "<group>"; };
 		3D78FDAB16E54CF700C9A28C /* UIImage+JTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+JTAdditions.m"; path = "Classes/Categories/UIImage+JTAdditions.m"; sourceTree = "<group>"; };
+		3D78FDAD16E5681E00C9A28C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		3D78FDAF16E56DA600C9A28C /* JTReminderManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTReminderManger.h; path = Classes/Objects/JTReminderManger.h; sourceTree = "<group>"; };
+		3D78FDB016E56DA600C9A28C /* JTReminderManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTReminderManger.m; path = Classes/Objects/JTReminderManger.m; sourceTree = "<group>"; };
+		3D78FDB616E66A6400C9A28C /* JTDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTDetailViewController.h; path = Classes/Controllers/JTDetailViewController.h; sourceTree = "<group>"; };
+		3D78FDB716E66A6400C9A28C /* JTDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTDetailViewController.m; path = Classes/Controllers/JTDetailViewController.m; sourceTree = "<group>"; };
+		3D78FDB916E6805700C9A28C /* JTHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTHeaderView.h; path = Classes/Views/JTHeaderView.h; sourceTree = "<group>"; };
+		3D78FDBA16E6805700C9A28C /* JTHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTHeaderView.m; path = Classes/Views/JTHeaderView.m; sourceTree = "<group>"; };
 		3DBA6A9D16E00E40009719DF /* btn_camera_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_camera_black.png; path = Assets/Icons/btn_camera_black.png; sourceTree = "<group>"; };
 		3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_camera_black@2x.png"; path = "Assets/Icons/btn_camera_black@2x.png"; sourceTree = "<group>"; };
 		3DBA6AA116E014C7009719DF /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -181,6 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D78FDAE16E5681F00C9A28C /* EventKit.framework in Frameworks */,
 				3DBA6AA216E014C7009719DF /* iAd.framework in Frameworks */,
 				3D60FA8316D7C70100AC73A2 /* QuartzCore.framework in Frameworks */,
 				3D60FA8116D7C6FA00AC73A2 /* CoreData.framework in Frameworks */,
@@ -196,6 +208,7 @@
 		3D60FA5016D7C60000AC73A2 = {
 			isa = PBXGroup;
 			children = (
+				3D78FDAD16E5681E00C9A28C /* EventKit.framework */,
 				3DBA6AA116E014C7009719DF /* iAd.framework */,
 				3D60FA6516D7C60000AC73A2 /* CheckApp */,
 				3D60FA5E16D7C60000AC73A2 /* Frameworks */,
@@ -296,6 +309,8 @@
 				3D60FA9116D7CACC00AC73A2 /* JTObject.m */,
 				3D60FA9616D7CBFA00AC73A2 /* JTObjectManager.h */,
 				3D60FA9716D7CBFA00AC73A2 /* JTObjectManager.m */,
+				3D78FDAF16E56DA600C9A28C /* JTReminderManger.h */,
+				3D78FDB016E56DA600C9A28C /* JTReminderManger.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -316,6 +331,8 @@
 			children = (
 				7E7EBBC716DA87D4008A5E83 /* JTModalView.h */,
 				7E7EBBC816DA87D4008A5E83 /* JTModalView.m */,
+				3D78FDB916E6805700C9A28C /* JTHeaderView.h */,
+				3D78FDBA16E6805700C9A28C /* JTHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -446,6 +463,8 @@
 				7E7EBBBE16D83742008A5E83 /* JTBuyListViewController.m */,
 				3D78FD7816E51C6300C9A28C /* JTSettingsViewController.h */,
 				3D78FD7916E51C6300C9A28C /* JTSettingsViewController.m */,
+				3D78FDB616E66A6400C9A28C /* JTDetailViewController.h */,
+				3D78FDB716E66A6400C9A28C /* JTDetailViewController.m */,
 			);
 			name = TableViewControllers;
 			sourceTree = "<group>";
@@ -572,6 +591,9 @@
 				3D78FD7A16E51C6300C9A28C /* JTSettingsViewController.m in Sources */,
 				3D78FD8216E51CD600C9A28C /* JTItemsCell.m in Sources */,
 				3D78FDAC16E54CF700C9A28C /* UIImage+JTAdditions.m in Sources */,
+				3D78FDB116E56DA700C9A28C /* JTReminderManger.m in Sources */,
+				3D78FDB816E66A6600C9A28C /* JTDetailViewController.m in Sources */,
+				3D78FDBB16E6805700C9A28C /* JTHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

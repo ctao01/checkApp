@@ -69,8 +69,14 @@
     
     [self addCenterButtonWithImage:[UIImage imageNamed:@"cameraTabBarItem"]];
 
-
 }
+
+//- (void) viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    NSLog(@"viewWillAppear:%@",[self.object.category title]);
+//    [self.modalView setCategory:[self.object.category title]];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -83,6 +89,7 @@
 -(void) showCategoryList
 {
     JTCategoryViewController * vc1 = [[JTCategoryViewController alloc]initFromViewController:self];
+//    JTCategoryViewController * vc1 = [[JTCategoryViewController alloc]initWithCurrentObject:self.object];
     UINavigationController * nc1 = [[UINavigationController alloc]initWithRootViewController:vc1];
     vc1.navigationItem.title = @"Select A Category";
     
@@ -227,12 +234,12 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-    if (viewController == [tabBarController.viewControllers objectAtIndex:1])
-    {
-        UINavigationController * nc = (UINavigationController*)viewController;
-        JTBuyListViewController * vc = [nc.viewControllers objectAtIndex:0];
-        [vc generateToBuyData];
-    }
+//    if (viewController == [tabBarController.viewControllers objectAtIndex:1])
+//    {
+//        UINavigationController * nc = (UINavigationController*)viewController;
+//        JTBuyListViewController * vc = [nc.viewControllers objectAtIndex:0];
+//        [vc generateToBuyData];
+//    }
 
     return YES;
 }

@@ -12,5 +12,7 @@
 
 + (NSString*) imagePathWithItemName:(NSString*)itemName;
 + (NSString*) dateFormatterShortStyle:(NSDate*) date;
++ (NSString*) dateFormatterMediumStyleWithoutTime:(NSDate*) date;
++ (NSString*) dateFormatterLongStyle:(NSDate*) date;
 
 @end

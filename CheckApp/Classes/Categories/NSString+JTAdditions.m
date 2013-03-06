@@ -34,5 +34,25 @@
     return string;
 }
 
++ (NSString*) dateFormatterMediumStyleWithoutTime:(NSDate*) date
+{
+    NSDateFormatter * df = [[NSDateFormatter alloc]init];
+    [df setDateStyle:NSDateFormatterMediumStyle];
+    
+    NSString * string = [df stringFromDate:date];
+    
+    return string;
+}
+
++ (NSString*) dateFormatterLongStyle:(NSDate*) date
+{
+    NSDateFormatter * df = [[NSDateFormatter alloc]init];
+    [df setDateStyle:NSDateFormatterLongStyle];
+    [df setTimeStyle:NSDateFormatterLongStyle];
+    
+    NSString * string = [df stringFromDate:date];
+    
+    return string;
+}
 
 @end

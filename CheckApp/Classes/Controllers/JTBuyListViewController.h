@@ -10,6 +10,5 @@
 
 @interface JTBuyListViewController : UITableViewController
 
-- (void) generateToBuyData;
 
 @end
