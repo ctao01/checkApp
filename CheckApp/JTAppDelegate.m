@@ -20,6 +20,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    
     JTRootViewController * vc = [[JTRootViewController alloc]init];
     self.nvc = [[UINavigationController alloc]initWithRootViewController:vc];
     self.window.rootViewController = self.nvc;

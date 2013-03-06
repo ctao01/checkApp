@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JTItemsViewController : UITableViewController
+@interface JTItemsViewController : UITableViewController <UIAlertViewDelegate>
 
 @property (nonatomic , retain) NSMutableArray * items;
 @end

@@ -31,7 +31,7 @@ static CGFloat SubTitleLabelHeight = 22;
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         if ( [UIScreen mainScreen].bounds.size.height == 568.0) _titleLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:16.0f];
-        else _titleLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:14.0f];
+        else _titleLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:13.0f];
         _titleLabel.backgroundColor = [UIColor clearColor];
         
         [self.contentView addSubview:_iconImageView];

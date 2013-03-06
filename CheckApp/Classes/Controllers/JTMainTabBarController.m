@@ -11,7 +11,7 @@
 #import "JTBuyListViewController.h"
 #import "NSString+JTAdditions.h"
 #import "UIImage+JTAdditions.h"
-
+#import "JTNavigationController.h"
 
 @interface JTMainTabBarController ()
 {
@@ -37,7 +37,7 @@
         
         NSMutableArray * array = [[NSMutableArray alloc]init];
         JTCategoryViewController * vc1 = [[JTCategoryViewController alloc]init];
-        UINavigationController * nc1 = [[UINavigationController alloc]initWithRootViewController:vc1];
+        JTNavigationController * nc1 = [[JTNavigationController alloc]initWithRootViewController:vc1];
         vc1.navigationItem.title = @"Category";
         nc1.tabBarItem.title = @"Category";
         [array addObject:nc1];
@@ -68,7 +68,6 @@
 	// Do any additional setup after loading the view.
     
     [self addCenterButtonWithImage:[UIImage imageNamed:@"cameraTabBarItem"]];
-
 }
 
 //- (void) viewWillAppear:(BOOL)animated
@@ -138,20 +137,18 @@
         }
         else
         {
-            NSLog(@"object:%@",self.object);
-            NSLog(@"object.category.title%@",self.object.category.period);
-            
+            [UIView animateWithDuration:0.4f
+                                  delay:0.0f
+                                options: UIViewAnimationCurveEaseIn
+                             animations:^{
+                                 [self.modalView setFrame:CGRectMake(self.modalView.frame.origin.x, self.modalView.frame.origin.y - self.modalView.frame.size.height, self.modalView.frame.size.width, self.modalView.frame.size.height)];
+                             }
+                             completion:^(BOOL finished){
+                                 UIView * view = [self.view viewWithTag:1020];
+                                 if (view) [view removeFromSuperview];
+                             }];
         }
-        [UIView animateWithDuration:0.4f
-                              delay:0.0f
-                            options: UIViewAnimationCurveEaseIn
-                         animations:^{
-                             [self.modalView setFrame:CGRectMake(self.modalView.frame.origin.x, self.modalView.frame.origin.y - self.modalView.frame.size.height, self.modalView.frame.size.width, self.modalView.frame.size.height)];
-                         }
-                         completion:^(BOOL finished){
-                             UIView * view = [self.view viewWithTag:1020];
-                             if (view) [view removeFromSuperview];
-                         }];
+        
     }
 }
 

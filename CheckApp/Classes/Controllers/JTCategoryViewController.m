@@ -93,8 +93,9 @@ static float rgbcolor(value)
         if (view) [view removeFromSuperview];
     }
     
-    self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(215) green:rgbcolor(211) blue:rgbcolor(202) alpha:1.0f];
-        
+//    self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(215) green:rgbcolor(211) blue:rgbcolor(202) alpha:1.0f];
+    self.view.backgroundColor = [UIColor colorWithRed:rgbcolor(62.0f) green:rgbcolor(62.0f) blue:rgbcolor(60.0f) alpha:1.0f];
+    
     
     
 //    self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 30.0f)];

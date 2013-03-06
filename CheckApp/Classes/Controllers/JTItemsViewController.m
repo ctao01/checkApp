@@ -8,10 +8,14 @@
 
 #import "JTItemsViewController.h"
 #import "JTItemsCell.h"
+#import "JTItemGroupedCell.h"
 #import "NSString+JTAdditions.h"
 
 #import "JTDetailViewController.h"
 @interface JTItemsViewController ()
+{
+    NSIndexPath * beDeletedIndexPath;
+}
 @end
 
 @implementation JTItemsViewController
@@ -21,6 +25,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -28,10 +33,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIBarButtonItem * editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editTable:)];
-    self.navigationItem.rightBarButtonItem = editButton;
-    self.editing = NO;
-    
+//    UIBarButtonItem * editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editTable:)];
+//    self.navigationItem.rightBarButtonItem = editButton;
+//    self.editing = NO;
+    self.tableView.backgroundView = nil;
+    self.tableView.backgroundColor = [UIColor colorWithRed:62.0f/255.0f green:62.0f/255.0f blue:60.0f/255.0f alpha:1.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,11 +45,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+//    [self generateCoreData];
     
+    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(scheduleCheckUpdate) userInfo:nil repeats:NO];
+}
+
+- (void) scheduleCheckUpdate
+{
+     [self performSelectorInBackground:@selector(generateCoreData) withObject:nil];
+}
+
+- (void) generateCoreData
+{
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManager]managedObjectContext]];
     
@@ -52,7 +68,6 @@
     
     NSError * error;
     NSArray * allObjects = [[[JTObjectManager sharedManager]managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-    NSLog(@"%i",[allObjects count]);
     items = [[NSMutableArray alloc]init];
     for (JTObject * obj in allObjects)
     {
@@ -62,34 +77,8 @@
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"expiredDate" ascending:NO];
     [items sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
-    [self.tableView reloadData];
-}
-
-#pragma mark - Editable Table Method
-
-- (void) editTable:(id)sender{
-	if(self.editing)
-	{
-		[super setEditing:NO animated:NO];
-		[self.tableView setEditing:NO animated:NO];
-		[self.tableView reloadData];
-		[self.navigationItem.rightBarButtonItem setTitle:@"Edit"];
-        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStylePlain];
-        self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem;
-        
-	}
-	else
-	{
-		[super setEditing:YES animated:YES];
-		[self.tableView setEditing:YES animated:YES];
-		[self.tableView reloadData];
-		[self.navigationItem.rightBarButtonItem setTitle:@"Done"];
-        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
-        
-        UIBarButtonItem * deleteButton = [[UIBarButtonItem alloc]initWithTitle:@"Delete All" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteAllItems)];
-        self.navigationItem.leftBarButtonItem = deleteButton;
-        
-	}
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    
 }
 
 - (void) deleteAllItems
@@ -148,7 +137,7 @@
                 [object setToBuyDate:nil];
                 [object setToBuy:NO];
                 button.selected = NO;
-                [button setBackgroundImage:[UIImage imageNamed:@"toBuyBtn"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage imageNamed:@"btn_toBuy_normal"] forState:UIControlStateNormal];
                 
             }
             else
@@ -156,57 +145,90 @@
                 [object setToBuyDate:[NSDate date]];
                 [object setToBuy:YES];
                 button.selected = YES;
-                [button setBackgroundImage:[UIImage imageNamed:@"toBuyBtn_disable"] forState:UIControlStateSelected];
+                [button setBackgroundImage:[UIImage imageNamed:@"btn_toBuy_selected"] forState:UIControlStateSelected];
             }
             
         }
             break;
-            
+        case 1003:
+        {
+            beDeletedIndexPath = indexPath;
+            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Delete" message:@"Would you like to delete the item?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sure", nil];
+            [alertView show];
+        }
         default:
             break;
     }
     [object setUpdatedDate:[NSDate date]];
-    
     NSError *error;
     if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
-    {
         NSLog(@"Failed to save, error: %@", [error localizedDescription]);
-    }
+
 }
 
+#pragma mark - UIAlertView 
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        if (alertView.title == @"Delete All Items")
+        {
+            
+        }
+        else
+        {
+            [[[JTObjectManager sharedManager]managedObjectContext]deleteObject:[items objectAtIndex:beDeletedIndexPath.section]];
+            NSError *error;
+            if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
+                NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+            else
+            {
+//                [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:beDeletedIndexPath.section]  withRowAnimation:UITableViewRowAnimationFade];
+                [items removeObject:[items objectAtIndex:beDeletedIndexPath.section]];
+                [self.tableView reloadData];
+            }
+
+        }
+    }
+}
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+//    return 1;
+    return [items count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [items count];
+//    return [items count];
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JTObject * object = [items objectAtIndex:indexPath.row];
+    JTObject * object = [items objectAtIndex:indexPath.section];
     
     static NSString *CellIdentifier = @"Cell";
-    JTItemsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) cell = [[JTItemsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    JTItemGroupedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) cell = [[JTItemGroupedCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
     cell.tableViewController = self;
     cell.object = object;
     cell.titleLabel.text = object.name;
     cell.dateLabel.text = [NSString stringWithFormat:@"Lastest Update:%@",[NSString dateFormatterShortStyle:object.updatedDate]];
     cell.imageView.image = object.imagePath ? [UIImage imageWithData:[NSData dataWithContentsOfFile:object.imagePath]]:[UIImage imageNamed:@"btn_placeholder_temp"];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    // Configure the cell...
+//    // Configure the cell...
     
     return cell;
 }
+
 
 #pragma mark - Table view delegate
 
@@ -216,43 +238,32 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JTObject * object = [items objectAtIndex:indexPath.row];
+    JTObject * object = [items objectAtIndex:indexPath.section];
     JTDetailViewController * vc = [[JTDetailViewController alloc]initWithStyle:UITableViewStyleGrouped withObject:object];
     [self.navigationController pushViewController:vc animated:YES];
     vc.navigationItem.title = @"Details";
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
-- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (!indexPath) return UITableViewCellEditingStyleNone;
-    else return UITableViewCellEditingStyleDelete;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        JTObject * object = [items objectAtIndex:indexPath.row];
-        [[[JTObjectManager sharedManager]managedObjectContext]deleteObject:object];
-        
-        NSError *error;
-        if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
-        {
-            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
-        }
-        else
-        {
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            [self.items removeObjectAtIndex:indexPath.row];
-            [self.tableView reloadData];
-        }
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete)
+//    {
+//        JTObject * object = [items objectAtIndex:indexPath.row];
+//        [[[JTObjectManager sharedManager]managedObjectContext]deleteObject:object];
+//        
+//        NSError *error;
+//        if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
+//        {
+//            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+//        }
+//        else
+//        {
+//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil]
+//                             withRowAnimation:UITableViewRowAnimationFade];
+//            [self.items removeObjectAtIndex:indexPath.row];
+//            [self.tableView reloadData];
+//        }
+//    }
+//}
 
 @end

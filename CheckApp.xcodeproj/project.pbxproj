@@ -62,6 +62,21 @@
 		3D78FDB116E56DA700C9A28C /* JTReminderManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDB016E56DA600C9A28C /* JTReminderManger.m */; };
 		3D78FDB816E66A6600C9A28C /* JTDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDB716E66A6400C9A28C /* JTDetailViewController.m */; };
 		3D78FDBB16E6805700C9A28C /* JTHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDBA16E6805700C9A28C /* JTHeaderView.m */; };
+		3D78FDBE16E7957700C9A28C /* bg_item_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDBC16E7957700C9A28C /* bg_item_cell.png */; };
+		3D78FDBF16E7957700C9A28C /* bg_item_cell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDBD16E7957700C9A28C /* bg_item_cell@2x.png */; };
+		3D78FDC616E7989600C9A28C /* JTItemGroupedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDC516E7989300C9A28C /* JTItemGroupedCell.m */; };
+		3D78FDC916E79FEE00C9A28C /* JTButtonsLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDC816E79FEE00C9A28C /* JTButtonsLayerView.m */; };
+		3D78FDCC16E7AF5D00C9A28C /* btn_expireDays.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDCA16E7AF5D00C9A28C /* btn_expireDays.png */; };
+		3D78FDCD16E7AF5D00C9A28C /* btn_expireDays@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDCB16E7AF5D00C9A28C /* btn_expireDays@2x.png */; };
+		3D78FDD016E7B45F00C9A28C /* bg_item_cell_x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDCE16E7B45F00C9A28C /* bg_item_cell_x80.png */; };
+		3D78FDD116E7B45F00C9A28C /* bg_item_cell_x80@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDCF16E7B45F00C9A28C /* bg_item_cell_x80@2x.png */; };
+		3D78FDD816E7C31700C9A28C /* btn_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDD216E7C31100C9A28C /* btn_delete.png */; };
+		3D78FDD916E7C31700C9A28C /* btn_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDD316E7C31200C9A28C /* btn_delete@2x.png */; };
+		3D78FDDA16E7C31700C9A28C /* btn_toBuy_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDD416E7C31300C9A28C /* btn_toBuy_normal.png */; };
+		3D78FDDB16E7C31700C9A28C /* btn_toBuy_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDD516E7C31400C9A28C /* btn_toBuy_normal@2x.png */; };
+		3D78FDDC16E7C31700C9A28C /* btn_toBuy_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDD616E7C31600C9A28C /* btn_toBuy_selected.png */; };
+		3D78FDDD16E7C31700C9A28C /* btn_toBuy_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D78FDD716E7C31600C9A28C /* btn_toBuy_selected@2x.png */; };
+		3D78FDE016E7D0E800C9A28C /* JTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78FDDF16E7D0E800C9A28C /* JTNavigationController.m */; };
 		3DBA6A9F16E00E40009719DF /* btn_camera_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA6A9D16E00E40009719DF /* btn_camera_black.png */; };
 		3DBA6AA016E00E40009719DF /* btn_camera_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */; };
 		3DBA6AA216E014C7009719DF /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBA6AA116E014C7009719DF /* iAd.framework */; };
@@ -166,6 +181,24 @@
 		3D78FDB716E66A6400C9A28C /* JTDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTDetailViewController.m; path = Classes/Controllers/JTDetailViewController.m; sourceTree = "<group>"; };
 		3D78FDB916E6805700C9A28C /* JTHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTHeaderView.h; path = Classes/Views/JTHeaderView.h; sourceTree = "<group>"; };
 		3D78FDBA16E6805700C9A28C /* JTHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTHeaderView.m; path = Classes/Views/JTHeaderView.m; sourceTree = "<group>"; };
+		3D78FDBC16E7957700C9A28C /* bg_item_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_item_cell.png; path = Assets/Backgrounds/bg_item_cell.png; sourceTree = "<group>"; };
+		3D78FDBD16E7957700C9A28C /* bg_item_cell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_item_cell@2x.png"; path = "Assets/Backgrounds/bg_item_cell@2x.png"; sourceTree = "<group>"; };
+		3D78FDC416E7989300C9A28C /* JTItemGroupedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTItemGroupedCell.h; path = Classes/Cells/JTItemGroupedCell.h; sourceTree = "<group>"; };
+		3D78FDC516E7989300C9A28C /* JTItemGroupedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTItemGroupedCell.m; path = Classes/Cells/JTItemGroupedCell.m; sourceTree = "<group>"; };
+		3D78FDC716E79FEE00C9A28C /* JTButtonsLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTButtonsLayerView.h; path = Classes/Views/JTButtonsLayerView.h; sourceTree = "<group>"; };
+		3D78FDC816E79FEE00C9A28C /* JTButtonsLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTButtonsLayerView.m; path = Classes/Views/JTButtonsLayerView.m; sourceTree = "<group>"; };
+		3D78FDCA16E7AF5D00C9A28C /* btn_expireDays.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_expireDays.png; path = Assets/Icons/btn_expireDays.png; sourceTree = "<group>"; };
+		3D78FDCB16E7AF5D00C9A28C /* btn_expireDays@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_expireDays@2x.png"; path = "Assets/Icons/btn_expireDays@2x.png"; sourceTree = "<group>"; };
+		3D78FDCE16E7B45F00C9A28C /* bg_item_cell_x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_item_cell_x80.png; path = Assets/Backgrounds/bg_item_cell_x80.png; sourceTree = "<group>"; };
+		3D78FDCF16E7B45F00C9A28C /* bg_item_cell_x80@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_item_cell_x80@2x.png"; path = "Assets/Backgrounds/bg_item_cell_x80@2x.png"; sourceTree = "<group>"; };
+		3D78FDD216E7C31100C9A28C /* btn_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_delete.png; path = Assets/Icons/btn_delete.png; sourceTree = "<group>"; };
+		3D78FDD316E7C31200C9A28C /* btn_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_delete@2x.png"; path = "Assets/Icons/btn_delete@2x.png"; sourceTree = "<group>"; };
+		3D78FDD416E7C31300C9A28C /* btn_toBuy_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_toBuy_normal.png; path = Assets/Icons/btn_toBuy_normal.png; sourceTree = "<group>"; };
+		3D78FDD516E7C31400C9A28C /* btn_toBuy_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_toBuy_normal@2x.png"; path = "Assets/Icons/btn_toBuy_normal@2x.png"; sourceTree = "<group>"; };
+		3D78FDD616E7C31600C9A28C /* btn_toBuy_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_toBuy_selected.png; path = Assets/Icons/btn_toBuy_selected.png; sourceTree = "<group>"; };
+		3D78FDD716E7C31600C9A28C /* btn_toBuy_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_toBuy_selected@2x.png"; path = "Assets/Icons/btn_toBuy_selected@2x.png"; sourceTree = "<group>"; };
+		3D78FDDE16E7D0E800C9A28C /* JTNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTNavigationController.h; path = Classes/Controllers/JTNavigationController.h; sourceTree = "<group>"; };
+		3D78FDDF16E7D0E800C9A28C /* JTNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTNavigationController.m; path = Classes/Controllers/JTNavigationController.m; sourceTree = "<group>"; };
 		3DBA6A9D16E00E40009719DF /* btn_camera_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_camera_black.png; path = Assets/Icons/btn_camera_black.png; sourceTree = "<group>"; };
 		3DBA6A9E16E00E40009719DF /* btn_camera_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_camera_black@2x.png"; path = "Assets/Icons/btn_camera_black@2x.png"; sourceTree = "<group>"; };
 		3DBA6AA116E014C7009719DF /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -333,6 +366,8 @@
 				7E7EBBC816DA87D4008A5E83 /* JTModalView.m */,
 				3D78FDB916E6805700C9A28C /* JTHeaderView.h */,
 				3D78FDBA16E6805700C9A28C /* JTHeaderView.m */,
+				3D78FDC716E79FEE00C9A28C /* JTButtonsLayerView.h */,
+				3D78FDC816E79FEE00C9A28C /* JTButtonsLayerView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -344,6 +379,8 @@
 				3D60FAE116D7E22300AC73A2 /* JTCategoryItemCell.m */,
 				3D78FD8016E51CD600C9A28C /* JTItemsCell.h */,
 				3D78FD8116E51CD600C9A28C /* JTItemsCell.m */,
+				3D78FDC416E7989300C9A28C /* JTItemGroupedCell.h */,
+				3D78FDC516E7989300C9A28C /* JTItemGroupedCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -371,6 +408,8 @@
 		3D60FA9B16D7CCB400AC73A2 /* NavigationControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3D78FDDE16E7D0E800C9A28C /* JTNavigationController.h */,
+				3D78FDDF16E7D0E800C9A28C /* JTNavigationController.m */,
 			);
 			name = NavigationControllers;
 			sourceTree = "<group>";
@@ -421,6 +460,14 @@
 		3D78FD8416E5235800C9A28C /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				3D78FDD216E7C31100C9A28C /* btn_delete.png */,
+				3D78FDD316E7C31200C9A28C /* btn_delete@2x.png */,
+				3D78FDD416E7C31300C9A28C /* btn_toBuy_normal.png */,
+				3D78FDD516E7C31400C9A28C /* btn_toBuy_normal@2x.png */,
+				3D78FDD616E7C31600C9A28C /* btn_toBuy_selected.png */,
+				3D78FDD716E7C31600C9A28C /* btn_toBuy_selected@2x.png */,
+				3D78FDCA16E7AF5D00C9A28C /* btn_expireDays.png */,
+				3D78FDCB16E7AF5D00C9A28C /* btn_expireDays@2x.png */,
 				3D78FD9616E52A6B00C9A28C /* btn_expired.png */,
 				3D78FD9716E52A6B00C9A28C /* btn_expired@2x.png */,
 				3D78FD8616E5238C00C9A28C /* deleteBtn.png */,
@@ -444,6 +491,10 @@
 		3D78FD8516E5236300C9A28C /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
+				3D78FDCE16E7B45F00C9A28C /* bg_item_cell_x80.png */,
+				3D78FDCF16E7B45F00C9A28C /* bg_item_cell_x80@2x.png */,
+				3D78FDBC16E7957700C9A28C /* bg_item_cell.png */,
+				3D78FDBD16E7957700C9A28C /* bg_item_cell@2x.png */,
 				7E7EBBC316D92C85008A5E83 /* bg_CategoryCellwithTape_white.png */,
 				7E7EBBC416D92C85008A5E83 /* bg_CategoryCellwithTape_white@2x.png */,
 				7E7EBBB616D82DFB008A5E83 /* bg_CategoryCellwithTape.png */,
@@ -551,6 +602,18 @@
 				3D78FD9916E52A6B00C9A28C /* btn_expired@2x.png in Resources */,
 				3D78FDA016E53A1400C9A28C /* btn_placeholder_temp.png in Resources */,
 				3D78FDA116E53A1400C9A28C /* btn_placeholder_temp@2x copy.png in Resources */,
+				3D78FDBE16E7957700C9A28C /* bg_item_cell.png in Resources */,
+				3D78FDBF16E7957700C9A28C /* bg_item_cell@2x.png in Resources */,
+				3D78FDCC16E7AF5D00C9A28C /* btn_expireDays.png in Resources */,
+				3D78FDCD16E7AF5D00C9A28C /* btn_expireDays@2x.png in Resources */,
+				3D78FDD016E7B45F00C9A28C /* bg_item_cell_x80.png in Resources */,
+				3D78FDD116E7B45F00C9A28C /* bg_item_cell_x80@2x.png in Resources */,
+				3D78FDD816E7C31700C9A28C /* btn_delete.png in Resources */,
+				3D78FDD916E7C31700C9A28C /* btn_delete@2x.png in Resources */,
+				3D78FDDA16E7C31700C9A28C /* btn_toBuy_normal.png in Resources */,
+				3D78FDDB16E7C31700C9A28C /* btn_toBuy_normal@2x.png in Resources */,
+				3D78FDDC16E7C31700C9A28C /* btn_toBuy_selected.png in Resources */,
+				3D78FDDD16E7C31700C9A28C /* btn_toBuy_selected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +657,9 @@
 				3D78FDB116E56DA700C9A28C /* JTReminderManger.m in Sources */,
 				3D78FDB816E66A6600C9A28C /* JTDetailViewController.m in Sources */,
 				3D78FDBB16E6805700C9A28C /* JTHeaderView.m in Sources */,
+				3D78FDC616E7989600C9A28C /* JTItemGroupedCell.m in Sources */,
+				3D78FDC916E79FEE00C9A28C /* JTButtonsLayerView.m in Sources */,
+				3D78FDE016E7D0E800C9A28C /* JTNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
