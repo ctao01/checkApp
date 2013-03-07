@@ -12,10 +12,12 @@
 #import "NSString+JTAdditions.h"
 
 #import "JTDetailViewController.h"
+
 @interface JTItemsViewController ()
 {
     NSIndexPath * beDeletedIndexPath;
 }
+
 @end
 
 @implementation JTItemsViewController
@@ -33,11 +35,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    UIBarButtonItem * editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editTable:)];
-//    self.navigationItem.rightBarButtonItem = editButton;
+    UIBarButtonItem * deleteButton = [[UIBarButtonItem alloc]initWithTitle:@"Delete All" style:UIBarButtonItemStylePlain target:self action:@selector(deleteAllItems)];
+    self.navigationItem.rightBarButtonItem = deleteButton;
 //    self.editing = NO;
     self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = [UIColor colorWithRed:62.0f/255.0f green:62.0f/255.0f blue:60.0f/255.0f alpha:1.0f];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,19 +48,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [self generateCoreData];
-    
-    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(scheduleCheckUpdate) userInfo:nil repeats:NO];
-}
+    [self generateCoreData];
 
-- (void) scheduleCheckUpdate
-{
-     [self performSelectorInBackground:@selector(generateCoreData) withObject:nil];
 }
-
 - (void) generateCoreData
 {
     NSEntityDescription *entity = [NSEntityDescription
@@ -71,33 +68,27 @@
     items = [[NSMutableArray alloc]init];
     for (JTObject * obj in allObjects)
     {
-        if (obj.category.title == self.navigationItem.title)
+        if ( (obj.expiredDate != nil ) && (obj.category.title == self.navigationItem.title))
             [items addObject:obj];
     }
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"expiredDate" ascending:NO];
     [items sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [self.tableView reloadData];
+    [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0f];
+
     
-    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-    
+}
+
+- (void) refresh
+{
+    [self generateCoreData];
+
 }
 
 - (void) deleteAllItems
 {
-    for (JTObject * obj in items)
-    {
-        [[[JTObjectManager sharedManager]managedObjectContext]deleteObject:obj];
-    }
-    NSError *error;
-    if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
-    {
-        NSLog(@"Failed to save, error: %@", [error localizedDescription]);
-    }
-    else
-    {
-        [self.items removeAllObjects];
-        [self.tableView reloadData];
-    }
-    
+    UIAlertView * av = [[UIAlertView alloc]initWithTitle:@"Delete All Items" message:@"After you delete all items, all data will be removed from database." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", nil];
+    [av show];
 }
 
 #pragma mark -
@@ -115,7 +106,7 @@
             {
                 button.enabled = NO;
                 [button setTitle:@"" forState:UIControlStateDisabled];
-                [button setBackgroundImage:[UIImage imageNamed:@"expiredBtn_expired"] forState:UIControlStateDisabled];
+                [button setBackgroundImage:[UIImage imageNamed:@"btn_expired"] forState:UIControlStateDisabled];
                 object.expiredDate = [NSDate date];
                 object.expired = YES;
             }
@@ -174,7 +165,18 @@
     {
         if (alertView.title == @"Delete All Items")
         {
-            
+            for (JTObject * obj in items)
+            {
+                [[[JTObjectManager sharedManager]managedObjectContext]deleteObject:obj];
+            }
+            NSError *error;
+            if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
+                NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+            else
+            {
+                [self.items removeAllObjects];
+                [self.tableView reloadData];
+            }
         }
         else
         {

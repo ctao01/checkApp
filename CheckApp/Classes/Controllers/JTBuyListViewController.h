@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTPullRefreshTableViewController.h"
 
-@interface JTBuyListViewController : UITableViewController
+@interface JTBuyListViewController : JTPullRefreshTableViewController
 
 
 @end

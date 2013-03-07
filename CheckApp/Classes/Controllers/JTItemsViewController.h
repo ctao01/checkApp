@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTPullRefreshTableViewController.h"
 
-@interface JTItemsViewController : UITableViewController <UIAlertViewDelegate>
+@interface JTItemsViewController : JTPullRefreshTableViewController <UIAlertViewDelegate>
 
 @property (nonatomic , retain) NSMutableArray * items;
 @end

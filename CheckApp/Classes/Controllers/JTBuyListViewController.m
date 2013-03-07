@@ -8,13 +8,13 @@
 
 #import "JTBuyListViewController.h"
 #import "JTDetailViewController.h"
-
+#import "JTToBuyItemCell.h"
+#import "NSString+JTAdditions.h"
 @interface JTBuyListViewController ()
 {
     NSArray * keys; 
 }
 @property (nonatomic , retain) NSMutableArray * toBuyItems;
-- (void) generateToBuyData;
 
 @end
 
@@ -35,11 +35,8 @@
     [super viewDidLoad];
 //    keys = [NSArray arrayWithObjects:@"Recently",@"Days Ago",@"Week Ago",@"Month Ago",@"Earlier", nil];
     UIBarButtonItem * editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editTable:)];
-    self.navigationItem.leftBarButtonItem = editButton;
+    self.navigationItem.rightBarButtonItem = editButton;
     self.editing = NO;
-    
-    UIBarButtonItem * addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToBuyItem)];
-    self.navigationItem.rightBarButtonItem = addButton;
     
     self.navigationItem.title = @"To-Buy List";
 }
@@ -57,10 +54,13 @@
 }
 #pragma mark - Pre-Load Data
 
+//- (void) scheduleCheckUpdate
+//{
+//    [self performSelectorInBackground:@selector(generateToBuyData) withObject:nil];
+//}
+
 - (void) generateToBuyData
-{
-    NSLog(@"to-buy");
-    
+{    
     NSEntityDescription * entity = [NSEntityDescription
                                    entityForName:@"JTObject" inManagedObjectContext:[[JTObjectManager sharedManager]managedObjectContext]];
     
@@ -74,7 +74,7 @@
     self.toBuyItems = [[NSMutableArray alloc]init];
     for (JTObject * obj in allObjects)
     {
-        NSLog(@"%@",allObjects);
+//        NSLog(@"%@",allObjects);
         if (obj.toBuy == YES)
         {
             [self.toBuyItems addObject:obj];
@@ -92,8 +92,17 @@
 //            else
 //                [self.toBuyItems setObject:[[self.toBuyItems objectForKey:@"Earlier"] arrayByAddingObject:obj] forKey:@"Earlier"];
         }
-
+        NSLog(@"toBuyItems:%@",self.toBuyItems);
     }
+//    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0f];
+
+
+}
+
+- (void) refresh
+{
+    [self generateToBuyData];
 }
 
 #pragma mark - Editable Table Method
@@ -123,15 +132,6 @@
         
 	}
 }
-
-- (void) addToBuyItem
-{
-    JTDetailViewController * vc = [[JTDetailViewController alloc]initWithStyle:UITableViewStyleGrouped withObject:nil];
-    UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:vc];
-    
-    [self.navigationController presentViewController:nc animated:YES completion:^{}];
-}
-
 - (void) deleteAllItems
 {
     for (JTObject * object in self.toBuyItems)
@@ -143,10 +143,12 @@
         {
             NSLog(@"Failed to save, error: %@", [error localizedDescription]);
         }
+        else
+        {
+            [self.toBuyItems removeAllObjects];
+            [self.tableView reloadData];
+        }
     }
-    [self.toBuyItems removeAllObjects];
-    [self.tableView reloadData];
-    
 }
 
 #pragma mark - Table view data source
@@ -164,21 +166,31 @@
 //    NSArray * array = [self.toBuyItems objectForKey:[keys objectAtIndex:section]];
 //    return [array count];
     return [self.toBuyItems count];
+//    return 30;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    JTToBuyItemCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) cell = [[JTToBuyItemCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     // Configure the cell...
-    
-    
+    JTObject * obj = [self.toBuyItems objectAtIndex:indexPath.row];
+    cell.titleLabel.text = obj.name;
+    cell.categoryLabel.text = [obj.category title];
+    cell.dateLabel.text = [NSString stringWithFormat:@"%@ Added",[NSString dateFormatterShortStyle:obj.toBuyDate]];
+    cell.iconImageView.image = obj.imagePath ? [UIImage imageWithData:[NSData dataWithContentsOfFile:obj.imagePath]]:[UIImage imageNamed:@"btn_placeholder_temp"];
+
     return cell;
 }
 
 
 #pragma mark - Table view delegate
+
+- (float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {

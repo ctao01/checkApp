@@ -13,6 +13,8 @@
 @implementation JTItemGroupedCell
 @synthesize tableViewController;
 @synthesize object = _object;
+@synthesize titleLabel = _titleLabel;
+@synthesize dateLabel = _dateLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -164,7 +166,7 @@
     UIButton * button = [[UIButton alloc]initWithFrame:innerFrame];
     button.tag = 1001;
     [button setBackgroundImage:[UIImage imageNamed:@"btn_expireDays"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"expiredBtn_expired"] forState:UIControlStateDisabled];
+    [button setBackgroundImage:[UIImage imageNamed:@"btn_expired"] forState:UIControlStateDisabled];
     [button setTitleEdgeInsets:UIEdgeInsetsMake(8.0f, 15.0f, 5.0, 5.0)];
     button.titleLabel.font = [UIFont systemFontOfSize:12];
 //    button.titleLabel.textColor = [UIColor colorWithRed:220.0f/255.0f green:220.0f/255.0f blue:220.0f/255.0f alpha:1];

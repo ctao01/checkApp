@@ -40,11 +40,13 @@
         JTNavigationController * nc1 = [[JTNavigationController alloc]initWithRootViewController:vc1];
         vc1.navigationItem.title = @"Category";
         nc1.tabBarItem.title = @"Category";
+        [nc1.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_category_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_category"]];
         [array addObject:nc1];
         
         JTBuyListViewController * vc2 = [[JTBuyListViewController alloc]initWithStyle:UITableViewStylePlain];
         UINavigationController * nc2 = [[UINavigationController alloc]initWithRootViewController:vc2];
         nc2.tabBarItem.title = @"To-Buy List";
+        [nc2.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy"]];
         [array addObject:nc2];
         
         for (int count = 0; count < 3; count++)
@@ -109,6 +111,45 @@
                          if (view) [view removeFromSuperview];
                      }];
     self.object = nil;
+}
+
+- (void) addToBuyListItem
+{
+    [self.object setName:self.modalView.tf.text];
+    if (self.object.name == nil || self.object.category == nil)
+    {
+        UIAlertView * av = [[UIAlertView alloc]initWithTitle:@"Warning!" message:@"You have to add the title and category for your new item." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [av show];
+    }
+    
+    else
+    {
+        int days = [[(JTCategory*)self.object.category period]intValue];
+        [self.object setUpdatedDate:[NSDate date]];
+        [self.object setExpiredDate:nil];
+        [self.object setExpired:NO];
+        [self.object setToBuy:YES];
+        [self.object setToBuyDate:[NSDate date]];
+        NSError *error;
+        if (![[[JTObjectManager sharedManager] managedObjectContext] save:&error])
+        {
+            NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+        }
+        else
+        {
+            [UIView animateWithDuration:0.4f
+                                  delay:0.0f
+                                options: UIViewAnimationCurveEaseIn
+                             animations:^{
+                                 [self.modalView setFrame:CGRectMake(self.modalView.frame.origin.x, self.modalView.frame.origin.y - self.modalView.frame.size.height, self.modalView.frame.size.width, self.modalView.frame.size.height)];
+                             }
+                             completion:^(BOOL finished){
+                                 UIView * view = [self.view viewWithTag:1020];
+                                 if (view) [view removeFromSuperview];
+                             }];
+        }
+        
+    }
 }
 
 - (void) completeCreating
@@ -231,18 +272,13 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-//    if (viewController == [tabBarController.viewControllers objectAtIndex:1])
-//    {
-//        UINavigationController * nc = (UINavigationController*)viewController;
-//        JTBuyListViewController * vc = [nc.viewControllers objectAtIndex:0];
-//        [vc generateToBuyData];
-//    }
-
     return YES;
 }
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
     currentIndex = self.selectedIndex;
+//    if (self.selectedIndex == 0) [viewController.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_category_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_category"]];
+//    else if (self.selectedIndex == 1) [viewController.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy"]];
 }
 
 #pragma mark - UIImagePickerController Delegate

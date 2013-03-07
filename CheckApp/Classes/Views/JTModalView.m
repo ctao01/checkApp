@@ -65,16 +65,17 @@
     
     CGRect frame = CGRectMake(0.0f, 0.0f, CONSTANT * 5, 160.0f);
     frame.origin = CGPointMake((rect.size.width - frame.size.width) / 2 ,
-                               (rect.size.height - frame.size.height) / 2);
+                               (rect.size.height - frame.size.height) / 3);
     
     [self drawTheCenterRect:frame];
     
     CGRect innerFrame = UIEdgeInsetsInsetRect(frame, UIEdgeInsetsMake(20.0f, 10.0f, 20.0f, 10.0f));
     CGRect topFrame = UIEdgeInsetsInsetRect(innerFrame, UIEdgeInsetsMake(0.0f, 0.0f, innerFrame.size.height * 1 / 3, 0.0f));
     CGRect lowerFrame = UIEdgeInsetsInsetRect(innerFrame, UIEdgeInsetsMake(innerFrame.size.height * 2 / 3, 0.0f, 0.0f, 0.0f));
-
+    
     [self drawThumbViewWithRect:CGRectMake(topFrame.origin.x, topFrame.origin.y, 80.0f, 80.0f)];
-    [self attachConfirmButtonsWithRect:lowerFrame];
+//    [self attachConfirmButtonsWithRect:lowerFrame];
+    [self setUpButtons:lowerFrame];
     
     UIImage * image = [UIImage imageNamed:@"btn_close_red_center"];
     UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -181,8 +182,29 @@
     [self addSubview:catBtn];
 }
 
+- (void) setUpButtons:(CGRect)rect
+{
+    CGRect innerFrame = UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(5.0f, 0.0f, 5.0f, 0.0f));
+    CGRect frame1 = CGRectMake(innerFrame.origin.x, innerFrame.origin.y +10, (rect.size.width - 20)/2, innerFrame.size.height);
+    UIButton * btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn1 setBackgroundImage:[UIImage imageNamed:@"btn_addItem"] forState:UIControlStateNormal];
+    [btn1 addTarget:tbc action:@selector(completeCreating) forControlEvents:UIControlEventTouchUpInside];
+    [btn1 setFrame:frame1];
+    
+    CGRect frame2 = CGRectMake(frame1.origin.x + frame1.size.width + 20.0f, frame1.origin.y, frame1.size.width, innerFrame.size.height);
+    UIButton * btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn2 setBackgroundImage:[UIImage imageNamed:@"btn_addToBuyItem"] forState:UIControlStateNormal];
+    [btn2 addTarget:tbc action:@selector(addToBuyListItem) forControlEvents:UIControlEventTouchUpInside];
+    [btn2 setFrame:frame2];
+    
+    [self addSubview:btn1];
+    [self addSubview:btn2];
+}
+
 - (void) attachConfirmButtonsWithRect:(CGRect)rect
 {
+    NSLog(@"%@",NSStringFromCGRect(rect));
+    
     CGRect buttonRect = UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(10.0f, 25.0f, 0.0f, 25.0f));
     UIButton * btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn1 setFrame:buttonRect];
