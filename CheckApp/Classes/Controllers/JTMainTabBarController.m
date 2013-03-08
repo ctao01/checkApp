@@ -9,6 +9,9 @@
 #import "JTMainTabBarController.h"
 #import "JTCategoryViewController.h"
 #import "JTBuyListViewController.h"
+#import "JTNotificationViewController.h"
+#import "JTSettingsViewController.h"
+
 #import "NSString+JTAdditions.h"
 #import "UIImage+JTAdditions.h"
 #import "JTNavigationController.h"
@@ -39,24 +42,33 @@
         JTCategoryViewController * vc1 = [[JTCategoryViewController alloc]init];
         JTNavigationController * nc1 = [[JTNavigationController alloc]initWithRootViewController:vc1];
         vc1.navigationItem.title = @"Category";
-        nc1.tabBarItem.title = @"Category";
+//        nc1.tabBarItem.title = @"Category";
+//        nc1.tabBarItem.title = @"";
         [nc1.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_category_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_category"]];
         [array addObject:nc1];
         
         JTBuyListViewController * vc2 = [[JTBuyListViewController alloc]initWithStyle:UITableViewStyleGrouped];
-        UINavigationController * nc2 = [[UINavigationController alloc]initWithRootViewController:vc2];
-        nc2.tabBarItem.title = @"To-Buy List";
+        JTNavigationController * nc2 = [[JTNavigationController alloc]initWithRootViewController:vc2];
+//        nc2.tabBarItem.title = @"To-Buy List";
+//        nc2.tabBarItem.title = @"";
         [nc2.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy"]];
         [array addObject:nc2];
         
-        for (int count = 0; count < 3; count++)
-        {
-            UIViewController * vc = [[UIViewController alloc]init];
-            UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:vc];
-            vc.title = [NSString stringWithFormat:@"view%i",count];
-            
-            [array addObject:nc];
-        }
+        UIViewController * vc = [[UIViewController alloc]init];
+        UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [array addObject:nc];
+        
+        JTNotificationViewController * vc3 = [[JTNotificationViewController alloc]initWithStyle:UITableViewStyleGrouped];
+        JTNavigationController * nc3 = [[JTNavigationController alloc]initWithRootViewController:vc3];
+//        nc3.tabBarItem.title = @"";
+        [nc3.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_notif_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_notif"]];
+        [array addObject:nc3];
+
+        JTSettingsViewController * vc4 = [[JTSettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
+        JTNavigationController * nc4 = [[JTNavigationController alloc]initWithRootViewController:vc4];
+        [nc4.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_settings_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_settings"]];
+        [array addObject:nc4];
+        
         self.viewControllers = [NSArray arrayWithArray:array];
         self.selectedIndex = 0;
 
