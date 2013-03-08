@@ -12,5 +12,4 @@
 @property (nonatomic , retain) JTObject * object;
 
 - (id)initWithStyle:(UITableViewStyle)style withObject:(JTObject*)object;
-
 @end

@@ -39,6 +39,8 @@
     self.editing = NO;
     
     self.navigationItem.title = @"To-Buy List";
+    self.tableView.backgroundView = nil;
+    self.tableView.backgroundColor = [UIColor colorWithRed:62.0f/255.0f green:62.0f/255.0f blue:60.0f/255.0f alpha:1.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,13 +53,16 @@
 {
     [super viewDidAppear:animated];
     [self generateToBuyData];
+
 }
+
+
 #pragma mark - Pre-Load Data
 
-//- (void) scheduleCheckUpdate
-//{
-//    [self performSelectorInBackground:@selector(generateToBuyData) withObject:nil];
-//}
+- (void) scheduleCheckUpdate
+{
+    [self performSelectorInBackground:@selector(generateToBuyData) withObject:nil];
+}
 
 - (void) generateToBuyData
 {    
@@ -74,7 +79,6 @@
     self.toBuyItems = [[NSMutableArray alloc]init];
     for (JTObject * obj in allObjects)
     {
-//        NSLog(@"%@",allObjects);
         if (obj.toBuy == YES)
         {
             [self.toBuyItems addObject:obj];
@@ -94,15 +98,15 @@
         }
         NSLog(@"toBuyItems:%@",self.toBuyItems);
     }
+    [self.tableView reloadData];
 //    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-    [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0f];
-
-
 }
 
 - (void) refresh
 {
     [self generateToBuyData];
+    [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0f];
+
 }
 
 #pragma mark - Editable Table Method
@@ -113,10 +117,11 @@
 		[super setEditing:NO animated:NO];
 		[self.tableView setEditing:NO animated:NO];
 		[self.tableView reloadData];
-		[self.navigationItem.leftBarButtonItem setTitle:@"Edit"];
-        [self.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStylePlain];
-        UIBarButtonItem * addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToBuyItem)];
-        self.navigationItem.rightBarButtonItem = addButton;
+		[self.navigationItem.rightBarButtonItem setTitle:@"Edit"];
+//        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStylePlain];
+//        UIBarButtonItem * addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToBuyItem)];
+//        self.navigationItem.rightBarButtonItem = addButton;
+        self.navigationItem.leftBarButtonItem = nil;
         
 	}
 	else
@@ -124,11 +129,13 @@
 		[super setEditing:YES animated:YES];
 		[self.tableView setEditing:YES animated:YES];
 		[self.tableView reloadData];
-		[self.navigationItem.leftBarButtonItem setTitle:@"Done"];
-        [self.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
+        
+		[self.navigationItem.rightBarButtonItem setTitle:@"Done"];
+        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
+        
 
         UIBarButtonItem * deleteButton = [[UIBarButtonItem alloc]initWithTitle:@"Delete All" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteAllItems)];
-        self.navigationItem.rightBarButtonItem = deleteButton;
+        self.navigationItem.leftBarButtonItem = deleteButton;
         
 	}
 }

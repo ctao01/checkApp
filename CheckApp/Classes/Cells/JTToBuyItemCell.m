@@ -20,8 +20,8 @@
         self.backgroundView = [[UIImageView alloc]init];
         self.selectedBackgroundView = [[UIImageView alloc]init];
         UIImage * backgroundImage ;
-        if (deviceOS >= 5.0f) backgroundImage = [[UIImage imageNamed:@"bg_tobuyitem_cell_x80"] resizableImageWithCapInsets:UIEdgeInsetsMake(30, 2, 30, 2)];
-        else backgroundImage = [[UIImage imageNamed:@"bg_tobuyitem_cell_x80"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0];
+        if (deviceOS >= 5.0f) backgroundImage = [[UIImage imageNamed:@"bg_tobuyitem_cell"] resizableImageWithCapInsets:UIEdgeInsetsMake(30, 2, 30, 2)];
+        else backgroundImage = [[UIImage imageNamed:@"bg_tobuyitem_cell"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0];
         ((UIImageView *)self.backgroundView).image = backgroundImage;
         
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(65.0f, self.contentView.frame.origin.y + 3, 200.0f, 24.0f)];

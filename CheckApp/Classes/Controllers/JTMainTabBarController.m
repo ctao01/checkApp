@@ -43,7 +43,7 @@
         [nc1.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_category_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_category"]];
         [array addObject:nc1];
         
-        JTBuyListViewController * vc2 = [[JTBuyListViewController alloc]initWithStyle:UITableViewStylePlain];
+        JTBuyListViewController * vc2 = [[JTBuyListViewController alloc]initWithStyle:UITableViewStyleGrouped];
         UINavigationController * nc2 = [[UINavigationController alloc]initWithRootViewController:vc2];
         nc2.tabBarItem.title = @"To-Buy List";
         [nc2.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy_selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"btn_tabitem_tobuy"]];

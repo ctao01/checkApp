@@ -55,6 +55,7 @@
     [self generateCoreData];
 
 }
+
 - (void) generateCoreData
 {
     NSEntityDescription *entity = [NSEntityDescription
