@@ -151,6 +151,7 @@
     self.categoryButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.categoryButton setFrame:UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(0.0f, 36.0f, 0.0f, 0.0f))];
     [self.categoryButton addTarget:vc action:@selector(showCategoryList) forControlEvents:UIControlEventTouchUpInside];
+    [self.categoryButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)];
     [self.categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.categoryButton.titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:16]];
     [self.categoryButton.titleLabel setTextAlignment:NSTextAlignmentLeft];

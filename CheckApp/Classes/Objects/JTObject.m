@@ -17,6 +17,7 @@
 @dynamic expiredDate;
 @dynamic expired;
 @dynamic toBuy;
+@dynamic addToCalendar;
 @dynamic toBuyDate;
 @dynamic category;
 

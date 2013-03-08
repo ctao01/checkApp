@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSDate * expiredDate;
 @property (nonatomic) BOOL expired;
 @property (nonatomic) BOOL toBuy;
+@property (nonatomic) BOOL addToCalendar;
 @property (nonatomic, retain) NSDate * toBuyDate;
 @property (nonatomic, retain) JTCategory * category;
 

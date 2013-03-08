@@ -6,6 +6,7 @@
         <relationship name="objects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="JTObject" inverseName="category" inverseEntity="JTObject" syncable="YES"/>
     </entity>
     <entity name="JTObject" representedClassName="JTObject" syncable="YES">
+        <attribute name="addToCalendar" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="expired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="expiredDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,6 +18,6 @@
     </entity>
     <elements>
         <element name="JTCategory" positionX="-243" positionY="189" width="128" height="88"/>
-        <element name="JTObject" positionX="160" positionY="192" width="128" height="163"/>
+        <element name="JTObject" positionX="160" positionY="192" width="128" height="178"/>
     </elements>
 </model>

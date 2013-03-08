@@ -26,15 +26,6 @@
 @implementation JTDetailViewController
 @synthesize object = _object;
 
-//- (id)initWithStyle:(UITableViewStyle)style
-//{
-//    self = [super initWithStyle:style];
-//    if (self) {
-//        // Custom initialization
-//    }
-//    return self;
-//}
-
 - (id)initWithStyle:(UITableViewStyle)style withObject:(JTObject*)object
 {
     self = [super initWithStyle:style];
@@ -292,6 +283,13 @@
     
 }
 
+- (void) switchChanged:(id)sender {
+    UISwitch* switchControl = sender;
+//    NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
+    if (switchControl.on) NSLog(@"Add To Calendar");
+    else NSLog(@"remove form calendar");
+}
+
 #pragma mark - UIImagePickerController Delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -341,7 +339,13 @@
         cell.textLabel.text = @"Expire Date";
         cell.detailTextLabel.text = [NSString dateFormatterMediumStyleWithoutTime:self.object.expiredDate];
     }
-    else if (indexPath.row == 1) cell.textLabel.text = @"test";
+    else if (indexPath.row == 1)
+    {
+        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+        cell.accessoryView = switchView;
+        [switchView setOn:NO animated:NO];
+        [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+    }
     return cell;
 }
 
