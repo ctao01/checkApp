@@ -12,14 +12,19 @@
 #import "UIImage+JTAdditions.h"
 #import "JTCategoryViewController.h"
 
+#import <EventKit/EventKit.h>
+
+#define EXPIRED_SWITCH_TAG 30001
+#define TOBUY_SWITCH_TAG 30002
+
 @interface JTDetailViewController ()
 {
     JTHeaderView * headerView;
     UIView * footerView;
     
     UIDatePicker * picker;
-
 }
+@property (nonatomic , strong) NSIndexPath * selectedIndexPath;
 
 @end
 
@@ -43,13 +48,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.title = @"Details";
     UIBarButtonItem * save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveItem)];
     self.navigationItem.rightBarButtonItem = save;
     
     self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = [UIColor colorWithRed:62.0f/255.0f green:62.0f/255.0f blue:60.0f/255.0f alpha:1.0f];
-    
-    NSLog(@"%@",self.object);
+    self.selectedIndexPath = nil;
     
     headerView = [[JTHeaderView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.frame.size.width, 140.0f)];
     headerView.viewController = self;
@@ -84,16 +90,22 @@
     self.tableView.tableFooterView = footerView;
     
     CGRect bounds = [[UIScreen mainScreen]bounds];
-    picker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0.0f, bounds.size.height - 250.0f -44.0f, bounds.size.width, 250.0f +44.0f)];
+    picker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0.0f, bounds.size.height, bounds.size.width, 250.0f)];
     picker.datePickerMode = UIDatePickerModeDate;
     
     NSDate * oneHourAheadDate = [[NSDate date] dateByAddingTimeInterval:60 * 60];
     picker.date = oneHourAheadDate;
     [picker addTarget:self action:@selector(changeDateReminder:) forControlEvents:UIControlEventValueChanged];
     [picker setBackgroundColor:[UIColor clearColor]];
-    picker.hidden = YES;
-    [self.view addSubview:picker];
+//    picker.hidden = YES;
+
+    [self.navigationController.view addSubview:picker];
     
+}
+
+- (void) dealloc
+{
+    self.selectedIndexPath = nil;
 }
 
 #pragma mark -
@@ -150,22 +162,46 @@
 
 - (void) doneDatePicker
 {
-    [picker setHidden:YES];
-    UIBarButtonItem * save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveItem)];
-    self.navigationItem.rightBarButtonItem = save;
-    self.navigationItem.leftBarButtonItem = nil;
+//    [picker setHidden:YES];
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                         [picker setFrame:CGRectOffset(picker.frame, 0.0f, 250.0f)];
+                     }
+                     completion:^(BOOL finished){
+                         UIBarButtonItem * save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveItem)];
+                         self.navigationItem.rightBarButtonItem = save;
+                         self.navigationItem.leftBarButtonItem = nil;
+                         self.navigationItem.title = @"Details";
+
+                         if ([self.selectedIndexPath isEqual:[NSIndexPath indexPathForRow:1 inSection:0]])[self.object setExpiredDate:picker.date];
+                         else if ([self.selectedIndexPath isEqual:[NSIndexPath indexPathForRow:1 inSection:1]])[self.object setExpiredDate:picker.date];
+
+                         [self.tableView reloadData];
+                     }];
     
-    [self.object setExpiredDate:picker.date];
-    [self.tableView reloadData];
     
 }
 
 - (void) cancelDatePicker
 {
-    [picker setHidden:YES];
-    UIBarButtonItem * save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveItem)];
-    self.navigationItem.rightBarButtonItem = save;
-    self.navigationItem.leftBarButtonItem = nil;
+//    [picker setHidden:YES];
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                         [picker setFrame:CGRectOffset(picker.frame, 0.0f, 250.0f)];
+                     }
+                     completion:^(BOOL finished){
+                         UIBarButtonItem * save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveItem)];
+                         self.navigationItem.rightBarButtonItem = save;
+                         self.navigationItem.leftBarButtonItem = nil;
+                         self.navigationItem.title = @"Details";
+
+                     }];
+    
+    
 }
 
 #pragma mark - JTHeaderView Button Actions
@@ -279,14 +315,73 @@
         default:
             break;
     }
-    [self.object setUpdatedDate:[NSDate date]];
     
+    NSError *error;
+    if (![[[JTObjectManager sharedManager]managedObjectContext] save:&error])
+        NSLog(@"Failed to save, error: %@", [error localizedDescription]);
+    else
+    {
+        [self.object setUpdatedDate:[NSDate date]];
+        [self.tableView reloadData];
+    }
+   
 }
 
 - (void) switchChanged:(id)sender {
     UISwitch* switchControl = sender;
 //    NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
-    if (switchControl.on) NSLog(@"Add To Calendar");
+    UISwitch * sw = (UISwitch*)sender;
+    if (switchControl.on)
+    {
+        EKEventStore * store = [[EKEventStore alloc]init];
+        NSError *err;
+        NSDate * fiveDaysAfter = [[NSDate alloc]dateByAddingTimeInterval: 5*60*60*24];
+        NSDate * threeDaysBefore = [[NSDate alloc]dateByAddingTimeInterval: -3*60*60*24];
+        
+        if (sw.tag == EXPIRED_SWITCH_TAG)
+        {
+            if (Device_OS < 6.0f)
+            {
+                EKEvent * event = [EKEvent eventWithEventStore:store];
+                event.title = [NSString stringWithFormat:@"%@ is going to expire!!!",self.object.name];
+                event.startDate = threeDaysBefore;
+                event.endDate = [threeDaysBefore dateByAddingTimeInterval:60*10];;
+                [event setCalendar:[store defaultCalendarForNewEvents]];
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+            }
+            else
+            {
+                EKReminder * reminder = [EKReminder reminderWithEventStore:store];
+                reminder.title = self.object.name;
+                reminder.calendar = [store defaultCalendarForNewReminders];
+                EKAlarm * alarm = [EKAlarm alarmWithAbsoluteDate:threeDaysBefore];
+                [reminder addAlarm:alarm];
+                [store saveReminder:reminder commit:YES error:&err];
+            }
+        }
+        else if (sw.tag == TOBUY_SWITCH_TAG)
+        {
+            if (Device_OS < 6.0f)
+            {
+                EKEvent * event = [EKEvent eventWithEventStore:store];
+                event.title = [NSString stringWithFormat:@"Buy %@",self.object.name];
+                event.startDate = fiveDaysAfter;
+                event.endDate = [fiveDaysAfter dateByAddingTimeInterval:60*10];
+                [event setCalendar:[store defaultCalendarForNewEvents]];
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+            }
+            else
+            {
+                EKReminder * reminder = [EKReminder reminderWithEventStore:store];
+                reminder.title = self.object.name;
+                reminder.calendar = [store defaultCalendarForNewReminders];
+                EKAlarm * alarm = [EKAlarm alarmWithAbsoluteDate:fiveDaysAfter];
+                [reminder addAlarm:alarm];
+                [store saveReminder:reminder commit:YES error:&err];
+            }
+        }
+       
+    }
     else NSLog(@"remove form calendar");
 }
 
@@ -318,7 +413,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -335,17 +430,43 @@
     
     // Configure the cell...
     cell.selectionStyle = UITableViewCellAccessoryNone;
-    if (indexPath.row == 0){
-        cell.textLabel.text = @"Expire Date";
-        cell.detailTextLabel.text = [NSString dateFormatterMediumStyleWithoutTime:self.object.expiredDate];
-    }
-    else if (indexPath.row == 1)
+    if (indexPath.section == 0)
     {
-        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-        cell.accessoryView = switchView;
-        [switchView setOn:NO animated:NO];
-        [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+        if (indexPath.row == 0){
+            cell.textLabel.text = @"Expire Date";
+            cell.detailTextLabel.text = self.object.expiredDate ? [NSString dateFormatterMediumStyleWithoutTime:self.object.expiredDate]:@"(N/A)";
+        }
+        else if (indexPath.row == 1)
+        {
+            if(Device_OS < 6.0f) cell.textLabel.text = @"Add To Calendar";
+            else cell.textLabel.text = @"Add to Reminder";
+            UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+            switchView.tag = EXPIRED_SWITCH_TAG;
+            cell.accessoryView = switchView;
+            [switchView setOn:NO animated:YES];
+            if (self.object.expiredDate == nil) switchView.enabled = NO;
+            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+        }
     }
+    else
+    {
+        if (indexPath.row == 0){
+            cell.textLabel.text = @"To-Buy Date";
+            cell.detailTextLabel.text = self.object.toBuyDate ? [NSString dateFormatterMediumStyleWithoutTime:self.object.toBuyDate]:@"(N/A)";
+        }
+        else if (indexPath.row == 1)
+        {
+            if(Device_OS < 6.0f) cell.textLabel.text = @"Add To Calendar";
+            else cell.textLabel.text = @"Add to Reminder";
+            UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+            switchView.tag = TOBUY_SWITCH_TAG;
+            cell.accessoryView = switchView;
+            [switchView setOn:NO animated:YES];
+            if (self.object.toBuyDate == nil) switchView.enabled = NO;
+            [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+        }
+    }
+    
     return cell;
 }
 
@@ -373,20 +494,38 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 )
+    if ([self.selectedIndexPath isEqual:indexPath]) return;
+    else self.selectedIndexPath = indexPath;
+    
+    if (indexPath.section == 0)
     {
         if (indexPath.row == 0)
         {
-            [picker setHidden:NO];
+            if (self.object.expiredDate == nil) return;
+            else
+            {
+                [UIView animateWithDuration:0.5f
+                                      delay:0.0f
+                                    options:UIViewAnimationCurveEaseOut
+                                 animations:^{
+                                     [picker setFrame:CGRectOffset(picker.frame, 0.0f, -250.0f)];
+                                 }
+                                 completion:^(BOOL finished){
+                                     self.navigationItem.title = @"Select A Date";
+                                     UIBarButtonItem * doneBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneDatePicker)];
+                                     self.navigationItem.rightBarButtonItem = doneBtn;
+                                     
+                                     UIBarButtonItem * cancelBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelDatePicker)];
+                                     self.navigationItem.leftBarButtonItem = cancelBtn;
+                                 }];
+            }
             
-            UIBarButtonItem * doneBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneDatePicker)];
-            self.navigationItem.rightBarButtonItem = doneBtn;
             
-            UIBarButtonItem * cancelBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelDatePicker)];
-            self.navigationItem.leftBarButtonItem = cancelBtn;
         }
-//        else if (indexPath.row == 1) [picker setHidden:YES];
+        else    [self cancelDatePicker];
     }
+        
+   
 }
 
 @end

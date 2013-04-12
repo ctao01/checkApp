@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "JTModalView.h"
+#import <EventKit/EventKit.h>
 
 @interface JTMainTabBarController : UITabBarController < UINavigationControllerDelegate, UIImagePickerControllerDelegate , UITabBarControllerDelegate , UIAlertViewDelegate >
 @property (nonatomic , retain) JTObject * object;
 @property (nonatomic , retain) JTModalView * modalView;
-
 @end

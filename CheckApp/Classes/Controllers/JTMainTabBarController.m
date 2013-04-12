@@ -79,6 +79,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    EKEventStore * store = [[EKEventStore alloc]init];
+    if (Device_OS < 6.0f)
+    {
+        [store requestAccessToEntityType:EKEntityTypeEvent  completion:^(BOOL granted, NSError *error)
+         {
+             if (granted) NSLog(@"Calendar Granted");
+        }];
+    }
+    else
+    {
+        [store requestAccessToEntityType:EKEntityTypeReminder  completion:^(BOOL granted, NSError *error)
+         {
+             if (granted) NSLog(@"Reminder Granted");
+         }];
+    }
+    
 	// Do any additional setup after loading the view.
     
     [self addCenterButtonWithImage:[UIImage imageNamed:@"cameraTabBarItem"]];

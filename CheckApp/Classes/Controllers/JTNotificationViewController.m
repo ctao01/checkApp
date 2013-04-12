@@ -56,12 +56,17 @@
     collections = [[NSMutableArray alloc]init];
     for (JTObject * obj in allObjects)
     {
-        NSDateComponents *components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
-                                                                       fromDate:obj.toBuyDate toDate:[NSDate date]  options: 0];
+        NSDateComponents *components;
+        if (obj.toBuy == YES)
+           components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
+                                                                           fromDate:obj.toBuyDate toDate:[NSDate date]  options: 0];
+        else
+            components = nil;
+        
         if (obj.expired == YES || ([components day]>= 14.0f) )
             [collections addObject:obj];
     }
-    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"expiredDate" ascending:NO];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"updatedDate" ascending:NO];
     [collections sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [self.tableView reloadData];
     [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0f];

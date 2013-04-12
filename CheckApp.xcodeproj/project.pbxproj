@@ -11,6 +11,7 @@
 		3D19159E16DC6CDF0085B198 /* btn_close_red_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D19159A16DC6CDF0085B198 /* btn_close_red_center@2x.png */; };
 		3D19159F16DC6CDF0085B198 /* btn_modal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D19159B16DC6CDF0085B198 /* btn_modal.png */; };
 		3D1915A016DC6CDF0085B198 /* btn_modal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D19159C16DC6CDF0085B198 /* btn_modal@2x.png */; };
+		3D3A90D61717691200D38D19 /* JTCategorySetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3A90D51717691200D38D19 /* JTCategorySetupViewController.m */; };
 		3D60FA6016D7C60000AC73A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D60FA5F16D7C60000AC73A2 /* UIKit.framework */; };
 		3D60FA6216D7C60000AC73A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D60FA6116D7C60000AC73A2 /* Foundation.framework */; };
 		3D60FA6416D7C60000AC73A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D60FA6316D7C60000AC73A2 /* CoreGraphics.framework */; };
@@ -130,10 +131,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D047B7B1718ACDD001F2A2C /* JTGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTGlobals.h; sourceTree = "<group>"; };
 		3D19159916DC6CDF0085B198 /* btn_close_red_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_close_red_center.png; path = Assets/Icons/btn_close_red_center.png; sourceTree = "<group>"; };
 		3D19159A16DC6CDF0085B198 /* btn_close_red_center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_close_red_center@2x.png"; path = "Assets/Icons/btn_close_red_center@2x.png"; sourceTree = "<group>"; };
 		3D19159B16DC6CDF0085B198 /* btn_modal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_modal.png; path = Assets/Icons/btn_modal.png; sourceTree = "<group>"; };
 		3D19159C16DC6CDF0085B198 /* btn_modal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_modal@2x.png"; path = "Assets/Icons/btn_modal@2x.png"; sourceTree = "<group>"; };
+		3D3A90D41717691000D38D19 /* JTCategorySetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCategorySetupViewController.h; path = Classes/Controllers/JTCategorySetupViewController.h; sourceTree = "<group>"; };
+		3D3A90D51717691200D38D19 /* JTCategorySetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCategorySetupViewController.m; path = Classes/Controllers/JTCategorySetupViewController.m; sourceTree = "<group>"; };
 		3D60FA5B16D7C60000AC73A2 /* CheckApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D60FA5F16D7C60000AC73A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3D60FA6116D7C60000AC73A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -314,8 +318,6 @@
 		3D60FA5016D7C60000AC73A2 = {
 			isa = PBXGroup;
 			children = (
-				3D78FDAD16E5681E00C9A28C /* EventKit.framework */,
-				3DBA6AA116E014C7009719DF /* iAd.framework */,
 				3D60FA6516D7C60000AC73A2 /* CheckApp */,
 				3D60FA5E16D7C60000AC73A2 /* Frameworks */,
 				3D60FA5C16D7C60000AC73A2 /* Products */,
@@ -333,6 +335,8 @@
 		3D60FA5E16D7C60000AC73A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D78FDAD16E5681E00C9A28C /* EventKit.framework */,
+				3DBA6AA116E014C7009719DF /* iAd.framework */,
 				3D60FA8216D7C70100AC73A2 /* QuartzCore.framework */,
 				3D60FA8016D7C6FA00AC73A2 /* CoreData.framework */,
 				3D60FA5F16D7C60000AC73A2 /* UIKit.framework */,
@@ -347,6 +351,7 @@
 			children = (
 				3D60FA6E16D7C60000AC73A2 /* JTAppDelegate.h */,
 				3D60FA6F16D7C60000AC73A2 /* JTAppDelegate.m */,
+				3D047B7B1718ACDD001F2A2C /* JTGlobals.h */,
 				3D60FAAF16D7D51300AC73A2 /* Vendors */,
 				3D60FA8616D7C82F00AC73A2 /* Assets */,
 				3D60FA8516D7C81D00AC73A2 /* Categories */,
@@ -639,6 +644,8 @@
 				7E7EBBBE16D83742008A5E83 /* JTBuyListViewController.m */,
 				3D78FD7816E51C6300C9A28C /* JTSettingsViewController.h */,
 				3D78FD7916E51C6300C9A28C /* JTSettingsViewController.m */,
+				3D3A90D41717691000D38D19 /* JTCategorySetupViewController.h */,
+				3D3A90D51717691200D38D19 /* JTCategorySetupViewController.m */,
 				3D78FDB616E66A6400C9A28C /* JTDetailViewController.h */,
 				3D78FDB716E66A6400C9A28C /* JTDetailViewController.m */,
 				3D7C28CD16EA584C0061002D /* JTNotificationViewController.h */,
@@ -822,6 +829,7 @@
 				3D7C288A16E80A870061002D /* JTToBuyItemCell.m in Sources */,
 				3D7C28AB16E8DCBB0061002D /* JTPullRefreshTableViewController.m in Sources */,
 				3D7C28CF16EA584D0061002D /* JTNotificationViewController.m in Sources */,
+				3D3A90D61717691200D38D19 /* JTCategorySetupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -899,6 +907,7 @@
 				INFOPLIST_FILE = "CheckApp/CheckApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -911,6 +920,7 @@
 				INFOPLIST_FILE = "CheckApp/CheckApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
